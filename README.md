@@ -79,75 +79,76 @@ You can find instructions on deploying a Neeto server from scratch here:
 
 **NOTE_NAME_EK**
 
-	A 256 bit key for encrypting a note's title. You can generate a random 256 bit key in a Rails console or Ruby Interpreter using:
+A 256 bit key for encrypting a note's title. You can generate a random 256 bit key in a Rails console or Ruby Interpreter using:
 
-	```
-	Digest::SHA256.hexdigest(SecureRandom.random_bytes(32))
-	```
+```
+Digest::SHA256.hexdigest(SecureRandom.random_bytes(32))
+```
 
 
 **NOTE_CONTENT_EK**
 
-	A 256 bit key for encrypting a note's content.
+A 256 bit key for encrypting a note's content.
 
 
 **NOTE_LOCAL_CONTENT_EK**
 
-	A 256 bit key for encrypting a note's locally encrypted content. (i.e a note is encrypted locally and then encrypted again on the server using different keys.)
+A 256 bit key for encrypting a note's locally encrypted content. (i.e a note is encrypted locally and then encrypted again on the server using different keys.)
 
 
 **ROOT_PRESENTATION_PATH**
 
-	*Optional/mutually exclusive with ROOT_REDIRECT.*
-	The root_path of the presentation that should be displayed when visiting the server's root.
+*Optional/mutually exclusive with ROOT_REDIRECT.*
+
+The root_path of the presentation that should be displayed when visiting the server's root.
 
 
 **ROOT_REDIRECT**
 
-	*Optional/mutually exclusive with ROOT_PRESENTATION_PATH.*
+*Optional/mutually exclusive with ROOT_PRESENTATION_PATH.*
 
-	A 256 bit key for encrypting a note's content.
+A 256 bit key for encrypting a note's content.
 
 
 **NEETO_PRESENTATION_HOST**
 
-	The base URL for shared notes. i.e notes.example.com/
-	This URL must eventually resolve to where your Neeto server is located.
-	i.e your API is available at api.example.com but should be publicly presented through notes.example.com, however, both URLs must point to the same server.
+The base URL for shared notes. i.e notes.example.com/
+This URL must eventually resolve to where your Neeto server is located.
+i.e your API is available at api.example.com but should be publicly presented through notes.example.com, however, both URLs must point to the same server.
 
-	*Note: trailing slash is required.*
+*Note: trailing slash is required.*
 
 
 **NEETO_SINGLE_USER_MODE**
 
-	*Optional*
+*Optional*
 
-	Default is true. If you're running a personal server, and want to prohibit strangers from registering for an account with your server, you should set this true. If you wish to create a public server that allows user registration and multiple user notes, set this to false.
+Default is true. If you're running a personal server, and want to prohibit strangers from registering for an account with your server, you should set this true. If you wish to create a public server that allows user registration and multiple user notes, set this to false.
 
 
 **DB_HOST**
 
-	Database host.
+Database host.
 
 
 **DB_PORT**
 
-	Database port. 3306 is standard.
+Database port. 3306 is standard.
 
 
 **DB_DATABASE**
 
-	Database name.
+Database name.
 
 
 **DB_USERNAME**
 
-	Database username.
+Database username.
 
 
 **DB_PASSWORD**
 
-	Database password.
+Database password.
 
 ## Contributing
 Contributions are encouraged and welcome. Currently outstanding items:
