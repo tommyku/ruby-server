@@ -7,7 +7,7 @@ You can see a live demo at https://app.neeto.io.
 Neeto is decentralized, which means anyone can run a Neeto server or client. The "official" client is available at app.neeto.io, and by default uses the main Neeto server. However, this option can be overridden to use a server of your choosing.
 
 ### What is Neeto?
-Neeto is a simple personal notes application with a strong focus on privacy and encryption. Notes are encrypted locally before transmitting over the wire with a key based only the user knows, and then encrypted once more server-side with a key only the server knows.
+Neeto is a simple personal notes application with a strong focus on privacy and encryption. Notes are encrypted locally before being transmitted over the wire with a key only the user knows, and then encrypted once more server-side with a key only the server knows.
 
 Neeto also allows you to create URLs for groups of notes. This means you can create a group called 'blog' and make the notes in this group publicly viewable at yourdomain.com/blog.
 
