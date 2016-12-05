@@ -1,4 +1,3 @@
-# template = ERB.new File.new("config/cap.yml").read
 CAP_CONFIG = YAML.load_file("config/cap.yml")
 
 # config valid only for current version of Capistrano

@@ -27,7 +27,7 @@ All this happens automatically and with very little effort from you.
 - Full screen writing
 - Simple UI
 
-For details about the "official" Neeto client, please see here.
+For details about the "official" Neeto client, please see the [Neeto web client repo](https://github.com/neeto-project/neeto-web-client).
 
 ### Running your own server
 You can run your own Neeto server, which allows you to have 100% control of your data. The Neeto server is built with Ruby on Rails and can be deployed in minutes. You can then use your server with any client that supports the Neeto protocol.
