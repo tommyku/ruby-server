@@ -1,0 +1,11 @@
+development:
+  presentation_host: <%= ENV['NEETO_PRESENTATION_HOST'] %>
+  single_user_mode: <%= ENV['NEETO_SINGLE_USER_MODE'] %>
+
+staging:
+  presentation_host: <%= ENV['NEETO_PRESENTATION_HOST'] %>
+  single_user_mode: <%= ENV['NEETO_SINGLE_USER_MODE'] %>
+
+production:
+  presentation_host: <%= ENV['NEETO_PRESENTATION_HOST'] %>
+  single_user_mode: <%= ENV['NEETO_SINGLE_USER_MODE'] %>

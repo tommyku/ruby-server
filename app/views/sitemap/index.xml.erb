@@ -1,0 +1,16 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <% for presentation in @presentations %>
+    <url>
+      <% if presentation.root_path %>
+        <loc> <%= request.base_url %>/<%= presentation.root_path %></loc>
+      <% else %>
+        <loc> <%= request.base_url %>/<%= presentation.owner.presentation.root_path %>/<%= presentation.relative_path %></loc>
+      <% end %>
+      <lastmod>
+        <%= presentation.updated_at.strftime('%Y-%m-%d') %>
+      </lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.5</priority>
+    </url>
+  <% end %>
+</urlset>
