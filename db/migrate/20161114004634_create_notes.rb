@@ -1,6 +1,6 @@
-class CreateSnippets < ActiveRecord::Migration
+class CreateNotes < ActiveRecord::Migration
   def change
-    create_table :snippets do |t|
+    create_table :notes do |t|
       t.string :name
       t.text :content
 
@@ -23,7 +23,9 @@ class CreateSnippets < ActiveRecord::Migration
       t.string :encrypted_name
       t.string :encrypted_name_iv
 
-      t.belongs_to :category
+      t.boolean :shared_via_group, :default => false
+      
+      t.belongs_to :group
       t.belongs_to :user
       t.timestamps null: false
     end

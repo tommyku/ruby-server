@@ -1,6 +1,6 @@
-class CreateCategories < ActiveRecord::Migration
+class CreateGroups < ActiveRecord::Migration
   def change
-    create_table :categories do |t|
+    create_table :groups do |t|
       t.belongs_to :user
       t.string :name
       t.timestamps null: false

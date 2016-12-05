@@ -42,6 +42,9 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration
       ## Tokens
       t.text :tokens
 
+      t.boolean :local_encryption_enabled
+      t.string :username, :unique => true
+
       t.timestamps
     end
 
