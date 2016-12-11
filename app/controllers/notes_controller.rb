@@ -10,6 +10,10 @@ class NotesController < ApiController
     @user = current_user
   }
 
+  def index
+    render :json => @user.notes
+  end
+
   def create
     @note = current_user.notes.new(s_params)
     if @note.save
@@ -39,53 +43,10 @@ class NotesController < ApiController
 
   rescue ActiveRecord::RecordInvalid => invalid
     render :json => {:error => "Unable to save.", :success => false}
-
   end
 
   def destroy
     @note.destroy
-  end
-
-  def share
-    if !@note
-      # sharing local note, no user
-      @note = Note.new(s_params)
-    end
-
-    if !@note.presentation
-      if @user
-        @note.presentation = @user.owned_presentations.new({:presentable => @note})
-      else
-        @note.presentation = Presentation.new({:presentable => @note})
-      end
-    end
-
-    if !@note.presentation.root_path
-      if Rails.configuration.x.neeto.single_user_mode
-        @note.presentation.set_root_path_from_name(@note.name)
-      else
-        @note.presentation.set_random_root_path
-      end
-    end
-
-    @note.presentation.enabled = true
-    @note.presentation.save
-
-    if @note.save
-      render :json => @note, :include => :presentation
-    else
-      not_valid @note
-    end
-  end
-
-  def unshare
-    @note.presentation.enabled = false
-    @note.presentation.save
-    if @note.save
-      render :json => @note, :include => :presentation
-    else
-      not_valid @note
-    end
   end
 
   private
@@ -95,7 +56,7 @@ class NotesController < ApiController
   end
 
   def permitted_params
-    [:name, :content, :local_encrypted_content, :local_eek,
+    [:content, :loc_enc_content, :loc_eek,
       :local_encryption_scheme, :group_id, :token, :shared_via_group,
       presentation: [:id, :root_path]]
   end

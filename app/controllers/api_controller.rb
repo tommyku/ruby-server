@@ -2,6 +2,7 @@ class ApiController < ApplicationController
   respond_to :json
 
   before_action {
+    authenticate_user!
     request.env['HTTP_ACCEPT_ENCODING'] = 'gzip'
   }
 

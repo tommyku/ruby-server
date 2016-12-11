@@ -21,7 +21,9 @@ gem 'dotenv-rails', '~> 2.1.1'
 
 gem 'bower-rails', '~> 0.10.0'
 
-gem 'devise_token_auth', '~> 0.1.39'
+gem 'devise'
+# gem 'devise_token_auth', '~> 0.1.39'
+gem 'jwt'
 
 gem "attr_encrypted", "~> 3.0.0"
 

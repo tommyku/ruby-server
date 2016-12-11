@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-          :recoverable, :rememberable, :trackable, :validatable
-  include DeviseTokenAuth::Concerns::User
+         :recoverable, :rememberable, :trackable, :validatable
+  # include DeviseTokenAuth::Concerns::User
 
   has_many :groups, -> { order 'created_at desc' }
   has_many :notes, -> { order 'created_at desc' }
@@ -21,6 +22,10 @@ class User < ApplicationRecord
         {:groups => {:include => [:presentation]}},
         {:notes => {:include => [:presentation]}}
       ])
+    end
+
+    def jwt
+      JWTWrapper.encode({:user_id => self.id})
     end
 
     def serializable_hash(options = {})

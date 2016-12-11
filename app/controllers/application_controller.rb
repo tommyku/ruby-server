@@ -1,15 +1,17 @@
 class ApplicationController < ActionController::Base
-  include DeviseTokenAuth::Concerns::SetUserByToken
+  # include DeviseTokenAuth::Concerns::SetUserByToken
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
   protect_from_forgery with: :null_session
+  # skip_before_filter :verify_authenticity_token
   after_action :set_csrf_cookie
+  respond_to :html, :json
 
   layout :false
 
-  rescue_from ActionView::MissingTemplate do |exception|
-  end
+  # rescue_from ActionView::MissingTemplate do |exception|
+  # end
 
   def frontend
 

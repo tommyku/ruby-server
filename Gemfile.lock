@@ -86,9 +86,6 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
-    devise_token_auth (0.1.39)
-      devise (> 3.5.2, <= 4.2)
-      rails (< 6)
     domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
@@ -104,6 +101,7 @@ GEM
       domain_name (~> 0.5)
     i18n (0.7.0)
     json (1.8.3)
+    jwt (1.5.6)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -223,8 +221,9 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   capistrano-sidekiq
-  devise_token_auth (~> 0.1.39)
+  devise
   dotenv-rails (~> 2.1.1)
+  jwt
   mysql2 (>= 0.3.13, < 0.5)
   non-stupid-digest-assets
   puma

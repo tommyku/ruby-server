@@ -2,7 +2,7 @@ class UsersController < ApiController
 
   before_action {
     @user = current_user
-    if !@user || @user.id != params[:id].to_i
+    if !@user
       render_unauthorized
     end
   }
@@ -23,6 +23,14 @@ class UsersController < ApiController
       note.group = group
       note.save
     end
+  end
+
+  def current
+    render :json => @user, include: [
+      :presentation,
+      {:groups => {:include => [:presentation]}},
+      {:notes => {:include => [:presentation]}}
+    ]
   end
 
   def update

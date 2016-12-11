@@ -6,13 +6,22 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '6c860c55b4274650e2cfed2fe065655450e46ae2dae5f73bc46b91caa34e8a4434283a5976327ca7e48c270c5f684dc01c60ec326d546dde50cc55ea8afb99ab'
+  # config.secret_key = 'd702c104e03b7d1f0aff3b1941ed27278fc935038dd19a20666c9f68582f719463148dd2b6eb849c2c4f09f43a972ab8dae1a0c6975845976faf153edfa71b0f'
+
+  config.warden do |manager|
+     # Registering your new Strategy
+     manager.strategies.add(:jwt, Devise::Strategies::JsonWebToken)
+
+     # Adding the new JWT Strategy to the top of Warden's list,
+     # Scoped by what Devise would scope (typically :user)
+     manager.default_strategies(scope: :user).unshift :jwt
+   end
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'help@neeto.io'
+  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -34,7 +43,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  config.authentication_keys = [:email, :domain_path]
+  # config.authentication_keys = [:email]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -90,6 +99,12 @@ Devise.setup do |config|
   # from the server. You can disable this option at your own risk.
   # config.clean_up_csrf_token_on_authentication = true
 
+  # When false, Devise will not attempt to reload routes on eager load.
+  # This can reduce the time taken to boot the app but if your application
+  # requires the Devise mappings to be loaded during boot time the application
+  # won't boot properly.
+  # config.reload_routes = true
+
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 11. If
   # using other algorithms, it sets how many times you want the password to be hashed.
@@ -102,7 +117,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '59ff27809b256b81223140c82cd81d98000883cd65a6e8bacfcf34090373ccb29a4fd4dbcb995346f63479dc93b294df0eaed407d4eb2de3f758cb380dfaae1f'
+  # config.pepper = '2465ed744aea0573500031fb3e3e0095570d1bca3ed02116d7975291fdf5ed54b670a0d93d41aeadae03ace0aa0324a46d1b00a4314027dfb4a72fdfbe6bd9d4'
 
   # Send a notification email when the user's password is changed
   # config.send_password_change_notification = false
@@ -208,7 +223,7 @@ Devise.setup do |config|
   # stretches to 10, and copy REST_AUTH_SITE_KEY to pepper).
   #
   # Require the `devise-encryptable` gem when using anything other than bcrypt
-  # config.encryptor = :md5
+  # config.encryptor = :sha512
 
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
