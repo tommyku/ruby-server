@@ -3,8 +3,8 @@ class RenameFields < ActiveRecord::Migration[5.0]
     rename_column :notes, :encrypted_content, :enc_content
     rename_column :notes, :encrypted_content_iv, :enc_content_iv
 
-    rename_column :notes, :encrypted_local_encrypted_content, :loc_enc_content_enc
-    rename_column :notes, :encrypted_local_encrypted_content_iv, :loc_enc_content_enc_iv
+    rename_column :notes, :encrypted_local_encrypted_content, :enc_loc_enc_content
+    rename_column :notes, :encrypted_local_encrypted_content_iv, :enc_loc_enc_content_iv
 
     rename_column :notes, :local_eek, :loc_eek
 

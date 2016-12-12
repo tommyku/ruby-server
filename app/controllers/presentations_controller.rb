@@ -26,10 +26,16 @@ class PresentationsController < ApplicationController
       return
     end
 
-    @presentation = root_presentation = Presentation.find_by_root_path(params[:root_presentation_path])
-    if params[:secondary_presentation_path]
-      @presentation = @presentation.owner.owned_presentations.find_by_relative_path(params[:secondary_presentation_path])
+    if Rails.configuration.x.neeto.single_user_mode
+      @presentation = root_presentation = Presentation.find_by_root_path(params[:root_presentation_path])
+      if params[:secondary_presentation_path]
+        @presentation = @presentation.owner.owned_presentations.find_by_relative_path(params[:secondary_presentation_path])
+      end
+    else
+      user = User.find_by_username(params[:root_presentation_path])
+      @presentation = user.owned_presentations.find_by_relative_path(params[:secondary_presentation_path])
     end
+
 
     if !@presentation || @presentation.enabled == false
       not_found
@@ -111,11 +117,15 @@ class PresentationsController < ApplicationController
     if Rails.configuration.x.neeto.single_user_mode
       resource.presentation.set_root_path_from_name(@group ? @group.name : @note.title) unless resource.presentation.root_path
     else
+      if !current_user.username
+        render :json => {:errors => ["Username is not set."]}, :status => 500
+        return
+      end
+      resource.presentation.root_path = current_user.username
       if @note
-        @note.presentation.set_random_root_path unless @note.presentation.root_path
+        @note.presentation.relative_path = @note.presentation.slug_for_property_and_name(:relative_path, @note.title) unless @note.presentation.relative_path
       else
         @group.presentation.relative_path = @group.name.downcase unless @group.presentation.relative_path
-        @group.presentation.parent_path = current_user.presentation.root_path if current_user.presentation
       end
     end
 

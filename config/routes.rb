@@ -53,6 +53,8 @@ Rails.application.routes.draw do
   resources :groups do
   end
 
+  post 'import' => "users#import"
+
   get 'sitemap.xml', :to => 'sitemap#index', :defaults => { :format => 'xml' }
 
   get ':root_presentation_path', :to => 'presentations#show'

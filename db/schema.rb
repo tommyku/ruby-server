@@ -10,19 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161211013457) do
+ActiveRecord::Schema.define(version: 20161211214730) do
 
   create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer  "user_id"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "uuid"
   end
 
   create_table "notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "local_encryption_scheme"
-    t.text     "loc_enc_content_enc",     limit: 65535
-    t.string   "loc_enc_content_enc_iv"
     t.text     "enc_content",             limit: 65535
     t.string   "enc_content_iv"
     t.integer  "group_id"
@@ -31,7 +30,7 @@ ActiveRecord::Schema.define(version: 20161211013457) do
     t.datetime "updated_at",                                            null: false
     t.boolean  "shared_via_group",                      default: false
     t.string   "loc_eek"
-    t.text     "loc_enc_content",         limit: 65535
+    t.string   "uuid"
   end
 
   create_table "presentations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -45,6 +44,7 @@ ActiveRecord::Schema.define(version: 20161211013457) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "host"
+    t.string   "uuid"
   end
 
   create_table "subscriptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

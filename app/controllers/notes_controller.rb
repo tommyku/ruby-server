@@ -56,7 +56,7 @@ class NotesController < ApiController
   end
 
   def permitted_params
-    [:content, :loc_enc_content, :loc_eek,
+    [:content, :loc_eek,
       :local_encryption_scheme, :group_id, :token, :shared_via_group,
       presentation: [:id, :root_path]]
   end
