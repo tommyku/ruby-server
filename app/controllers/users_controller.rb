@@ -31,11 +31,19 @@ class UsersController < ApiController
     presentations = params[:data][:presentations]
 
     group_mappings = []
-    note_mappings = []
 
     groups.each do |json_group|
       group = current_user.groups.find_or_create_by(uuid: json_group[:uuid])
       group.update(json_group.permit(:uuid, :name, :created_at, :modified_at))
+
+      json_presentation = json_group[:presentation]
+      if json_presentation && json_presentation.key?(:id)
+        json_presentation[:presentable_id] = group.id
+        group.presentation = current_user.owned_presentations.find_or_create_by(uuid: json_presentation[:uuid])
+        group.presentation.update(json_presentation.permit(:uuid, :root_path, :relative_path, :presentable_id, :presentable_type, :created_at, :modified_at))
+        group.presentation.save
+      end
+
       group.save
       group_mappings.push({:json => json_group, :saved => group})
     end
@@ -47,22 +55,16 @@ class UsersController < ApiController
       end
       note = current_user.notes.find_or_create_by(uuid: json_note[:uuid])
       note.update(json_note.permit(:uuid, :loc_eek, :content, :group_id, :created_at, :modified_at))
-      note.save!
-      note_mappings.push({:json => json_note, :saved => note})
-    end
 
-    presentations.each do |json_presentation|
-      if json_presentation[:presentable_type] == "Note"
-        note = note_mappings.find {|mapping| mapping[:json][:id] == json_presentation[:presentable_id]}[:saved]
+      json_presentation = json_note[:presentation]
+      if json_presentation && json_presentation.key?(:id)
         json_presentation[:presentable_id] = note.id
-      elsif json_presentation[:presentable_type] == "Group"
-        group = group_mappings.find {|mapping| mapping[:json][:id] == json_presentation[:presentable_id]}[:saved]
-        json_presentation[:presentable_id] = group.id
+        note.presentation = current_user.owned_presentations.find_or_create_by(uuid: json_presentation[:uuid])
+        note.presentation.update(json_presentation.permit(:uuid, :root_path, :relative_path, :presentable_id, :presentable_type, :created_at, :modified_at))
+        note.presentation.save
       end
 
-      presentation = current_user.owned_presentations.find_or_create_by(uuid: json_presentation[:uuid])
-      presentation.update(json_presentation.permit(:uuid, :host, :root_path, :relative_path, :presentable_id, :presentable_type, :enabled, :created_at, :modified_at))
-      presentation.save
+      note.save!
     end
   end
 
@@ -77,28 +79,6 @@ class UsersController < ApiController
   def update
     @user.update(u_params)
     render :json => @user
-  end
-
-  def enable_encryption
-    @user.local_encryption_enabled = true
-    @user.save
-    render :json => @user
-  end
-
-  def disable_encryption
-    @user.local_encryption_enabled = false
-    @user.save
-    render :json => @user
-  end
-
-  def set_username
-    if !@user.presentation
-      @user.presentation = @user.owned_presentations.new({:presentable => @user})
-    end
-    @user.presentation.root_path = params[:username]
-    @user.presentation.enabled = false
-    @user.presentation.save
-    render :json => @user.presentation
   end
 
   private

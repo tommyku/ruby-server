@@ -37,7 +37,7 @@ class PresentationsController < ApplicationController
     end
 
 
-    if !@presentation || @presentation.enabled == false
+    if !@presentation
       not_found
       return
     end
@@ -129,15 +129,7 @@ class PresentationsController < ApplicationController
       end
     end
 
-    resource.presentation.enabled = true
     resource.presentation.save
-
-    if @group
-      @group.notes.each do |note|
-        note.shared_via_group = true
-        note.save!
-      end
-    end
 
     if resource.save
       render :json => resource.presentation
@@ -147,7 +139,7 @@ class PresentationsController < ApplicationController
   end
 
   def update
-    @presentation.update(params.permit(:enabled))
+    @presentation.update(params.permit(:relative_path))
     render :json => @presentation
   end
 

@@ -7,8 +7,6 @@ class Note < ApplicationRecord
   belongs_to :group, optional: true
   has_one :presentation, as: :presentable, dependent: :destroy
 
-  accepts_nested_attributes_for :presentation
-
   attr_encrypted :content, key: ENV['NOTE_CONTENT_EK'], prefix: 'enc_'
   # attr_encrypted :loc_enc_content, key: ENV['NOTE_LOCAL_CONTENT_EK'], prefix: 'enc_'
 

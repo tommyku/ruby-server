@@ -1,7 +1,5 @@
 class NotesController < ApiController
 
-  include PrettyApiHelper
-
   before_action  {
     if params[:id]
       @note = current_user.notes.find(params[:id])
@@ -11,7 +9,13 @@ class NotesController < ApiController
   }
 
   def index
-    render :json => @user.notes
+    if params[:modified_after]
+      notes = @user.notes.where("modified_at > ?", params[:modified_after].to_time)
+    else
+      notes = @user.notes
+    end
+
+    render :json => notes
   end
 
   def create
@@ -34,7 +38,7 @@ class NotesController < ApiController
       Note.where(:user_id => current_user.id).find_each do |note|
         note_hash = note_hashes.detect{|s| s[:id] == note.id}
         if note_hash
-          note.update(PrettyApiHelper.with_nested_attributes(note_hash.permit(*permitted_params), :presentation))
+          note.update(note_hash.permit(*permitted_params))
         end
       end
     end
@@ -52,13 +56,11 @@ class NotesController < ApiController
   private
 
   def s_params
-    PrettyApiHelper.with_nested_attributes(params.permit(*permitted_params), :presentation)
+    params.permit(*permitted_params)
   end
 
   def permitted_params
-    [:content, :loc_eek,
-      :local_encryption_scheme, :group_id, :token, :shared_via_group,
-      presentation: [:id, :root_path]]
+    [:content, :loc_eek, :local_encryption_scheme, :group_id, :token]
   end
 
 end
