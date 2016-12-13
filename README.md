@@ -1,36 +1,28 @@
-# Neeto
+# Standard Notes Server, Ruby Implementation
 
-Neeto is a simple and secure personal notes/blogging system.
+This is a production-ready reference implementation of the [Standard Notes](standardnotes.org) protocol.
 
-You can see a live demo at https://app.neeto.io.
+Standard Notes is a secure personal notes/simple blogging system.
 
-Neeto is decentralized, which means anyone can run a Neeto server or client. The "official" client is available at app.neeto.io, and by default uses the main Neeto server. However, this option can be overridden to use a server of your choosing.
+A production client is available at https://app.neeto.io.
 
-### What is Neeto?
-Neeto is a simple personal notes application with a strong focus on privacy and encryption. Notes are encrypted locally before being transmitted over the wire with a key only the user knows, and then encrypted once more server-side with a key only the server knows.
+The Standard Notes protocol allows any client or server to communicate with one other and manage a user's notes as long as they speak the same language. Anyone can run a SN server or client.
 
-Neeto also allows you to create URLs for groups of notes. This means you can create a group called 'blog' and make the notes in this group publicly viewable at yourdomain.com/blog.
+### What is Standard Notes?
+Standard Notes is a simple personal notes application with a strong focus on privacy and encryption. Notes are encrypted locally before being transmitted over the wire with a key only the user knows, and then encrypted once more server-side with a key only the server knows.
+
+SN also allows you to create URLs for groups of notes. This means you can create a group called 'blog' and make the notes in this group publicly viewable at yourdomain.com/blog.
 
 You can also share individual notes and customize the URL, i.e if you wrote about finding secure and private Evernote alternatives, you can share it at yourdomain.com/why-i-switched-from-evernote.
 
 All this happens automatically and with very little effort from you.
 
 ### The Neeto Client
-**Features**
 
-- Grouping of notes
-- Auto-save
-- Markdown editor
-- Easy publishing/sharing of groups or individual notes.
-- Local encryption.
-- Quick filtering
-- Full screen writing
-- Simple UI
-
-For details about the "official" Neeto client, please see the [Neeto web client repo](https://github.com/neeto-project/neeto-web-client).
+The Neeto app is a production client that conforms to the Standard Notes protocol. For details about the Neeto client, or for instructions on running your own client, see the [Neeto web client repo](https://github.com/neeto-project/neeto-web-client).
 
 ### Running your own server
-You can run your own Neeto server, which allows you to have 100% control of your data. The Neeto server is built with Ruby on Rails and can be deployed in minutes. You can then use your server with any client that supports the Neeto protocol.
+You can run your own Standard Notes server, and use it with any SN compatible client. This allows you to have 100% control of your data. This server implementation is built with Ruby on Rails and can be deployed in minutes.
 
 #### Getting started
 
@@ -45,7 +37,7 @@ You can run your own Neeto server, which allows you to have 100% control of your
 1. Clone the project:
 
 	```
-	git clone https://github.com/neeto-project/neeto-server.git
+	git clone https://github.com/standardnotes/ruby-server.git
 	```
 
 2. Create a .env file in the project's root directory. Add environment variables (see Environment variables for full listing):
@@ -70,31 +62,20 @@ You can run your own Neeto server, which allows you to have 100% control of your
 
 ### Deploying to a live server
 
-You can find instructions on deploying a Neeto server from scratch here:
+You can find instructions on deploying an SN server from scratch here:
 
-[Deploying a Neeto server with Amazon EC2 and Nginx](https://github.com/neeto-project/neeto-server/wiki/Installing-a-private-Neeto-server-on-Amazon-EC2)
+[Deploying a Standard Notes server with Amazon EC2 and Nginx](https://github.com/standardnotes/ruby-server/wiki/Installing-a-private-Neeto-server-on-Amazon-EC2)
 
 ### Environment variables
-
-
-**NOTE_NAME_EK**
-
-A 256 bit key for encrypting a note's title. You can generate a random 256 bit key in a Rails console or Ruby Interpreter using:
-
-```
-Digest::SHA256.hexdigest(SecureRandom.random_bytes(32))
-```
 
 
 **NOTE_CONTENT_EK**
 
 A 256 bit key for encrypting a note's content.
 
-
-**NOTE_LOCAL_CONTENT_EK**
-
-A 256 bit key for encrypting a note's locally encrypted content. (i.e a note is encrypted locally and then encrypted again on the server using different keys.)
-
+```
+Digest::SHA256.hexdigest(SecureRandom.random_bytes(32))
+```
 
 **ROOT_PRESENTATION_PATH**
 
@@ -110,41 +91,33 @@ The root_path of the presentation that should be displayed when visiting the ser
 A 256 bit key for encrypting a note's content.
 
 
-**NEETO_PRESENTATION_HOST**
+**PRESENTATION_HOST**
 
-The base URL for shared notes. i.e notes.example.com/
-This URL must eventually resolve to where your Neeto server is located.
-i.e your API is available at api.example.com but should be publicly presented through notes.example.com, however, both URLs must point to the same server.
+The base URL for shared notes. i.e notes.example.com
+This URL must eventually resolve to where your Standard Notes server is located.
+i.e if your API is available at api.example.com but your presentation host is notes.example.com, both URLs must point to the same server.
 
-*Note: trailing slash is required.*
-
-
-**NEETO_SINGLE_USER_MODE**
+**SINGLE_USER_MODE**
 
 *Optional*
 
-Default is true. If you're running a personal server, and want to prohibit strangers from registering for an account with your server, you should set this true. If you wish to create a public server that allows user registration and multiple user notes, set this to false.
-
+This is not particular to the SN protocol, but just how this server manages multiple users. Default is true. If you're running a personal server, and want to prohibit strangers from registering for an account with your server, you should set this true. If you wish to create a public server that allows user registration and multiple user notes, set this to false.
 
 **DB_HOST**
 
 Database host.
 
-
 **DB_PORT**
 
 Database port. 3306 is standard.
-
 
 **DB_DATABASE**
 
 Database name.
 
-
 **DB_USERNAME**
 
 Database username.
-
 
 **DB_PASSWORD**
 
@@ -154,7 +127,6 @@ Database password.
 Contributions are encouraged and welcome. Currently outstanding items:
 
 - Test suite
-- Native clients
 
 ## License
-Neeto is released under the MIT License.
+Standard Notes Ruby is released under the MIT License.

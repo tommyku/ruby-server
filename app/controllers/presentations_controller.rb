@@ -26,7 +26,7 @@ class PresentationsController < ApplicationController
       return
     end
 
-    if Rails.configuration.x.neeto.single_user_mode
+    if Rails.configuration.x.single_user_mode
       @presentation = root_presentation = Presentation.find_by_root_path(params[:root_presentation_path])
       if params[:secondary_presentation_path]
         @presentation = @presentation.owner.owned_presentations.find_by_relative_path(params[:secondary_presentation_path])
@@ -114,7 +114,7 @@ class PresentationsController < ApplicationController
       end
     end
 
-    if Rails.configuration.x.neeto.single_user_mode
+    if Rails.configuration.x.single_user_mode
       resource.presentation.set_root_path_from_name(@group ? @group.name : @note.title) unless resource.presentation.root_path
     else
       if !current_user.username

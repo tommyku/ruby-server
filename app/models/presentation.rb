@@ -7,7 +7,7 @@ class Presentation < ApplicationRecord
 
   def serializable_hash(options = {})
     result = super(options)
-    url =  NEETO_CONFIG[Rails.env]["presentation_host"]
+    url =  SN_CONFIG[Rails.env]["presentation_host"]
     url = File.join(url, self.root_path) if self.root_path
     url = File.join(url, self.relative_path) if self.relative_path
     result[:url] = url

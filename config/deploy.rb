@@ -3,7 +3,7 @@ CAP_CONFIG = YAML.load_file("config/cap.yml")
 # config valid only for current version of Capistrano
 lock '3.6.1'
 
-set :application, 'neeto-server'
+set :application, 'standard-notes-server'
 set :repo_url, CAP_CONFIG["default"]["repo_url"]
 
 # Default branch is :master

@@ -1,0 +1,12 @@
+default: &default
+  presentation_host: <%= ENV['PRESENTATION_HOST'] %>
+  single_user_mode: <%= ENV['SINGLE_USER_MODE'] %>
+
+development:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

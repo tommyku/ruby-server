@@ -30,7 +30,7 @@ class User < ApplicationRecord
 
     def serializable_hash(options = {})
       result = super(options)
-      result[:single_user_mode] = Rails.configuration.x.neeto.single_user_mode
+      result[:single_user_mode] = Rails.configuration.x.single_user_mode
       result
     end
 
