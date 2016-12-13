@@ -64,7 +64,7 @@ You can run your own Standard Notes server, and use it with any SN compatible cl
 
 You can find instructions on deploying an SN server from scratch here:
 
-[Deploying a Standard Notes server with Amazon EC2 and Nginx](https://github.com/standardnotes/ruby-server/wiki/Installing-a-private-Neeto-server-on-Amazon-EC2)
+[Deploying a Standard Notes server with Amazon EC2 and Nginx](https://github.com/standardnotes/ruby-server/wiki/Deploying-a-private-Standard-Notes-server-with-Amazon-EC2-and-Nginx)
 
 ### Environment variables
 
