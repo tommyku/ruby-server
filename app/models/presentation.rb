@@ -1,5 +1,5 @@
 class Presentation < ApplicationRecord
-  belongs_to :item
+  belongs_to :item, :foreign_key => "item_uuid"
   belongs_to :owner, :class_name => "User", :foreign_key => "user_uuid"
 
   def serializable_hash(options = {})

@@ -10,7 +10,7 @@ class ItemsController < ApiController
 
   def index
     if params[:modified_after]
-      items = @user.item.where("modified_at > ?", params[:modified_after].to_time)
+      items = @user.items.where("modified_at > ?", params[:modified_after].to_time)
     else
       items = @user.items
     end
@@ -19,12 +19,21 @@ class ItemsController < ApiController
   end
 
   def create
-    @item = current_user.items.new(item_params)
-    if @item.save
-      render :json => @item
-    else
-      not_valid(@item)
+    item_hashes = params[:items] || [params[:item]]
+    items = []
+
+    Item.transaction do
+      item_hashes.each do |item_hash|
+        item = current_user.items.find_or_create_by(:uuid => item_hash[:uuid])
+        item.update(item_hash.permit(*permitted_params))
+        items.push(item)
+      end
     end
+
+    render :json => {:items => items}
+
+  rescue ActiveRecord::RecordInvalid => invalid
+    render :json => {:errors => ["Unable to save."]}
   end
 
   def update
@@ -32,22 +41,22 @@ class ItemsController < ApiController
     render :json => @item, :include => :presentation
   end
 
-  def batch_update
-    item_hashes = params[:items]
-    Item.transaction do
-      Item.where(:user_id => current_user.id).find_each do |item|
-        item_hash = item_hashes.detect{|s| s[:uuid] == item.id}
-        if item_hash
-          item.update(item_hash.permit(*permitted_params))
-        end
-      end
-    end
-
-    render :json => {:success => true}
-
-  rescue ActiveRecord::RecordInvalid => invalid
-    render :json => {:error => "Unable to save.", :success => false}
-  end
+  # def batch_update
+  #   item_hashes = params[:items]
+  #   Item.transaction do
+  #     Item.where(:user_id => current_user.id).find_each do |item|
+  #       item_hash = item_hashes.detect{|s| s[:uuid] == item.id}
+  #       if item_hash
+  #         item.update(item_hash.permit(*permitted_params))
+  #       end
+  #     end
+  #   end
+  #
+  #   render :json => {:success => true}
+  #
+  # rescue ActiveRecord::RecordInvalid => invalid
+  #   render :json => {:error => "Unable to save.", :success => false}
+  # end
 
   def destroy
     @item.destroy

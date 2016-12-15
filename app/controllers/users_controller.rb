@@ -69,11 +69,7 @@ class UsersController < ApiController
   end
 
   def current
-    render :json => @user, include: [
-      :presentation,
-      {:groups => {:include => [:presentation]}},
-      {:notes => {:include => [:presentation]}}
-    ]
+    render :json => @user, include: [{:items => {:include => [:presentation]}}]
   end
 
   def update

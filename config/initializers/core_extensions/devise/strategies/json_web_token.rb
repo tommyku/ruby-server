@@ -2,15 +2,13 @@ module Devise
   module Strategies
     class JsonWebToken < Base
       def valid?
-        puts "valid?"
         request.headers['Authorization'].present?
       end
 
       def authenticate!
-        puts "authenticate"
         return fail! unless claims
-        return fail! unless claims.has_key?('user_id')
-        success! User.find_by_id claims['user_id']
+        return fail! unless claims.has_key?('user_uuid')
+        success! User.find_by_uuid claims['user_uuid']
       end
 
       protected

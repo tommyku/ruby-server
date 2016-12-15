@@ -3,7 +3,7 @@ class Item < ApplicationRecord
 
   belongs_to :user, optional: true
 
-  has_one :presentation, dependent: :destroy
+  has_one :presentation, :foreign_key => "item_uuid", dependent: :destroy
 
   def references
     Reference.where("source_uuid = ? OR referenced_uuid = ?", self.uuid, self.uuid)
