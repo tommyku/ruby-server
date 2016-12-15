@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
     resources :items do
       resources :presentations
-      resources :references
       collection do
         put :batch_update
       end
