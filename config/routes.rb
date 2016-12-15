@@ -1,56 +1,28 @@
 Rails.application.routes.draw do
 
-  # mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-  #   passwords: 'devise_overrides/passwords'
-  # }
-
   devise_for :users, path: 'auth', controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
 
-
   resources :users do
     collection do
       get :current
     end
+
     member do
       post :merge
-      post :enable_encryption
-      post :disable_encryption
       post :set_username
     end
 
-    resources :notes do
+    resources :items do
       resources :presentations
-      # member do
-      #   post :share
-      #   post :unshare
-      # end
-
+      resources :references
       collection do
         put :batch_update
       end
     end
 
-    resources :groups do
-      resources :presentations
-      # member do
-      #   post :share
-      #   post :unshare
-      # end
-    end
-
-  end
-
-  resources :notes do
-    # collection do
-    #   post :share
-    #   post :unshare
-    # end
-  end
-
-  resources :groups do
   end
 
   post 'import' => "users#import"

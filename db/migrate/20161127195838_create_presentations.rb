@@ -1,6 +1,8 @@
 class CreatePresentations < ActiveRecord::Migration
   def change
-    create_table :presentations do |t|
+    create_table :presentations, :id => false do |t|
+      t.string :uuid, limit: 36, primary_key: true, null: false
+
       t.string :root_path
       t.string :parent_path
       t.string :relative_path
@@ -8,10 +10,8 @@ class CreatePresentations < ActiveRecord::Migration
 
       t.boolean :enabled, :default => true
 
-      t.integer :presentable_id
-      t.string :presentable_type
-
-      t.integer :user_id
+      t.integer :item_uuid
+      t.integer :user_uuid
 
       t.timestamps null: false
     end

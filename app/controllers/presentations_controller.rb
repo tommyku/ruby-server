@@ -6,12 +6,8 @@ class PresentationsController < ApplicationController
     if params[:id]
       @presentation = current_user.owned_presentations.find(params[:id])
     end
-    if params[:note_id]
-      @note = current_user.notes.find(params[:note_id])
-    elsif params[:group_id]
-      @group = current_user.groups.find(params[:group_id])
-    end
 
+    @item = current_user.items.find(params[:item_id])
   }
 
   def not_found(message = 'not_found')
@@ -19,7 +15,7 @@ class PresentationsController < ApplicationController
   end
 
   def show
-    @notes = []
+    @items = []
 
     if !params[:root_presentation_path]
       not_found
@@ -42,14 +38,14 @@ class PresentationsController < ApplicationController
       return
     end
 
-    type = @presentation.presentable_type
+    type = @presentation.item.content_type
 
     case type
     when "Note"
-      @notes = [@presentation.presentable]
+      @notes = [@presentation.item]
     when "Group"
-      @group = @presentation.presentable
-      @notes = @presentation.presentable.notes
+      @group = @presentation.item
+      @notes = @presentation.item.references.where(:content_type => "Note")
     end
 
     options = {
@@ -73,15 +69,15 @@ class PresentationsController < ApplicationController
      markdown = Redcarpet::Markdown.new(renderer, extensions)
 
     @notes.each do |note|
-      note.rendered_content = markdown.render(note.text)
+      note.rendered_content = markdown.render(note.value_for_content_key("text"))
     end
 
     if @notes.length > 0
       @base_note = @notes.first
-      @desc = @base_note.text[0,200]
-      @title = @base_note.title
+      @desc = @base_note.value_for_content_key("text")[0,200]
+      @title = @base_note.value_for_content_key("title")
     elsif @group
-      @title = "#{@group.name} — #{root_presentation.root_path}"
+      @title = "#{@group.value_for_content_key('name')} — #{root_presentation.root_path}"
     end
   end
 
@@ -91,50 +87,41 @@ class PresentationsController < ApplicationController
     render :template => "presentation/show"
   end
 
-  def includes_for_type(model_type)
-    case model_type
-    when "Note"
-
-    when "Group"
-      return [:notes]
-    when "User"
-
-    end
-  end
-
   def create
 
-    resource = @note || @group
-
-    if !resource.presentation
+    if !@item.presentation
       if current_user
-        resource.presentation = current_user.owned_presentations.new({:presentable => resource})
+        @item.presentation = current_user.owned_presentations.new({:item => @item})
       else
-        resource.presentation = Presentation.new({:presentable => resource})
+        @item.presentation = Presentation.new({:item => @item})
       end
     end
 
     if Rails.configuration.x.single_user_mode
-      resource.presentation.set_root_path_from_name(@group ? @group.name : @note.title) unless resource.presentation.root_path
+      if @item.content_type == "Note"
+        @item.presentation.set_root_path_from_name(@item.value_for_content_key("title")) unless @item.presentation.root_path
+      else
+        @item.presentation.set_root_path_from_name(@item.value_for_content_key("name")) unless @item.presentation.root_path
+      end
     else
       if !current_user.username
         render :json => {:errors => ["Username is not set."]}, :status => 500
         return
       end
-      resource.presentation.root_path = current_user.username
-      if @note
-        @note.presentation.relative_path = @note.presentation.slug_for_property_and_name(:relative_path, @note.title) unless @note.presentation.relative_path
+      @item.presentation.root_path = current_user.username
+      if @item.content_type == "Note"
+        @item.presentation.relative_path = @item.presentation.slug_for_property_and_name(:relative_path, @item.value_for_content_key("title")) unless @item.presentation.relative_path
       else
-        @group.presentation.relative_path = @group.name.downcase unless @group.presentation.relative_path
+        @item.presentation.relative_path = @item.name.downcase unless @item.presentation.relative_path
       end
     end
 
-    resource.presentation.save
+    @item.presentation.save
 
-    if resource.save
-      render :json => resource.presentation
+    if @item.save
+      render :json => @item.presentation
     else
-      not_valid resource
+      not_valid @item
     end
   end
 

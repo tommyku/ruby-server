@@ -22,6 +22,13 @@ module StandardNotes
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
 
+    config.active_record.primary_key = :uuid
+
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+    end
+
+
     # Cross-Origin Resource Sharing (CORS) for Rack compatible web applications.
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do

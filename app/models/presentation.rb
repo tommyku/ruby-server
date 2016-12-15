@@ -1,9 +1,6 @@
 class Presentation < ApplicationRecord
-  include Guidable
-
-  belongs_to :presentable, polymorphic: true
-  belongs_to :owner, :class_name => "User", :foreign_key => "user_id"
-  # validates :root_path, uniqueness: true, :allow_nil => true, :allow_blank => true
+  belongs_to :item
+  belongs_to :owner, :class_name => "User", :foreign_key => "user_uuid"
 
   def serializable_hash(options = {})
     result = super(options)
