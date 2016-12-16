@@ -14,15 +14,9 @@ Rails.application.routes.draw do
       post :merge
     end
 
-    resources :items, param: :uuid do
-      collection do
-        put :batch_update
-      end
-    end
+    resources :items, param: :uuid
 
   end
-
-  post 'import' => "users#import"
 
   get 'sitemap.xml', :to => 'sitemap#index', :defaults => { :format => 'xml' }
 

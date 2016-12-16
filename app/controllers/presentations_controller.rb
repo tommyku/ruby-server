@@ -26,10 +26,10 @@ class PresentationsController < ApplicationController
     case type
     when "Note"
       @notes = [@item]
-    when "Group"
-      @group = @item
-      note_ids = @item.value_for_content_key("references").select{|e| e.content_type == "Note"}.map { |e| e.uuid }
-      @notes = Item.where("uuid IN ?", note_ids)
+    when "Tag"
+      @tag = @item
+      note_ids = @item.value_for_content_key("references").select{|e| e["content_type"] == "Note"}.map { |e| e["uuid"] }
+      @notes = Item.where(uuid: note_ids)
     end
 
     @notes.each do |note|
@@ -40,8 +40,8 @@ class PresentationsController < ApplicationController
       @base_note = @notes.first
       @desc = @base_note.value_for_content_key("text")[0,200]
       @title = @base_note.value_for_content_key("title")
-    elsif @group
-      @title = "#{@group.value_for_content_key('name')} — #{root_presentation.root_path}"
+    elsif @tag
+      @title = "#{@tag.value_for_content_key('name')} — #{root_presentation.root_path}"
     end
   end
 

@@ -46,8 +46,10 @@ class ItemsController < ApiController
         return
       end
       item.presentation_name = item.slug_for_property_and_name("presentation_name", item.value_for_content_key("title"))
-      item.save
+    else
+      item.presentation_name = pname
     end
+    item.save
   end
 
   def update
