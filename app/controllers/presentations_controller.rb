@@ -3,11 +3,11 @@ class PresentationsController < ApplicationController
   respond_to :html, :json
 
   before_action only: [:create, :update, :destroy] {
-    if params[:id]
-      @presentation = current_user.owned_presentations.find(params[:id])
+    if params[:uuid]
+      @presentation = current_user.owned_presentations.find(params[:uuid])
     end
 
-    @item = current_user.items.find(params[:item_id])
+    @item = current_user.items.find(params[:item_uuid])
   }
 
   def not_found(message = 'not_found')

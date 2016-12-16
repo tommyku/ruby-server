@@ -12,12 +12,10 @@ Rails.application.routes.draw do
 
     member do
       post :merge
-      post :set_username
     end
 
-    resources :items do
-      resources :presentations
-      resources :references
+    resources :items, param: :uuid do
+      resources :presentations, param: :uuid
       collection do
         put :batch_update
       end

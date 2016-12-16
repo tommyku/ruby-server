@@ -41,6 +41,10 @@ class ItemsController < ApiController
     render :json => @item, :include => :presentation
   end
 
+  def destroy
+    @item.destroy
+  end
+
   # def batch_update
   #   item_hashes = params[:items]
   #   Item.transaction do
