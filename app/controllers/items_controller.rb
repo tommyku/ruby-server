@@ -10,7 +10,7 @@ class ItemsController < ApiController
 
   def index
     if params[:modified_after]
-      items = @user.items.where("modified_at > ?", params[:modified_after].to_time)
+      items = @user.items.where("modified_at > ?", params[:updated_after].to_time)
     else
       items = @user.items
     end
