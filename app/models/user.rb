@@ -5,8 +5,6 @@ class User < ApplicationRecord
 
   has_many :items, -> { order 'created_at desc' }, :foreign_key => "user_uuid"
 
-  # has_many :owned_presentations, :class_name => "Presentation", :foreign_key => "user_uuid"
-
   def jwt
     JWTWrapper.encode({:user_uuid => self.uuid})
   end
