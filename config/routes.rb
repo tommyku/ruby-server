@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     end
 
     resources :items, param: :uuid do
-      resources :presentations, param: :uuid
       collection do
         put :batch_update
       end
@@ -27,12 +26,12 @@ Rails.application.routes.draw do
 
   get 'sitemap.xml', :to => 'sitemap#index', :defaults => { :format => 'xml' }
 
-  get ':root_presentation_path', :to => 'presentations#show'
-  get ':root_presentation_path/:secondary_presentation_path', :to => 'presentations#show'
+  get ':presentation_name', :to => 'presentations#show'
+  get ':username/:presentation_name', :to => 'presentations#show'
 
   get '*path' => 'application#frontend'
 
-  if ENV['ROOT_PRESENTATION_PATH']
+  if ENV['ROOT_PRESENTATION_NAME']
     root :to => "presentations#root"
   elsif ENV['ROOT_REDIRECT']
     root :to => redirect("#{ENV['ROOT_REDIRECT']}", :status => 302)

@@ -26,6 +26,9 @@ class ItemsController < ApiController
       item_hashes.each do |item_hash|
         item = current_user.items.find_or_create_by(:uuid => item_hash[:uuid])
         item.update(item_hash.permit(*permitted_params))
+        if item_hash.has_key?("presentation_name")
+          self._update_presentation_name(item, item_hash[:presentation_name])
+        end
         items.push(item)
       end
     end
@@ -36,31 +39,21 @@ class ItemsController < ApiController
     render :json => {:errors => ["Unable to save."]}
   end
 
+  def _update_presentation_name(item, pname)
+    if pname == "_auto_"
+      if !current_user.username
+        render :json => {:errors => ["Username is not set."]}, :status => 500
+        return
+      end
+      item.presentation_name = item.slug_for_property_and_name("presentation_name", item.value_for_content_key("title"))
+      item.save
+    end
+  end
+
   def update
     @item.update!(item_params)
-    render :json => @item, :include => :presentation
+    render :json => @item
   end
-
-  def destroy
-    @item.destroy
-  end
-
-  # def batch_update
-  #   item_hashes = params[:items]
-  #   Item.transaction do
-  #     Item.where(:user_id => current_user.id).find_each do |item|
-  #       item_hash = item_hashes.detect{|s| s[:uuid] == item.id}
-  #       if item_hash
-  #         item.update(item_hash.permit(*permitted_params))
-  #       end
-  #     end
-  #   end
-  #
-  #   render :json => {:success => true}
-  #
-  # rescue ActiveRecord::RecordInvalid => invalid
-  #   render :json => {:error => "Unable to save.", :success => false}
-  # end
 
   def destroy
     @item.destroy

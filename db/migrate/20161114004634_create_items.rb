@@ -5,7 +5,12 @@ class CreateItems < ActiveRecord::Migration
       t.text :content
       t.string :content_type
       t.string :loc_eek
-      t.belongs_to :user
+      # t.belongs_to :user
+      t.string :user_uuid
+
+      # Presentable
+      t.string :presentation_name
+
       t.timestamps null: false
     end
   end
