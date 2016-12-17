@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   end
 
+  get 'auth/params' => "users#authparams"
+
   get 'sitemap.xml', :to => 'sitemap#index', :defaults => { :format => 'xml' }
 
   get ':presentation_name', :to => 'presentations#show'

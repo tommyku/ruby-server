@@ -1,5 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   respond_to :json
 
   # POST /resource
@@ -23,6 +25,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
      set_minimum_password_length
      respond_with resource
    end
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:pw_func, :pw_alg, :pw_cost, :pw_key_size, :pw_nonce])
   end
 
 end

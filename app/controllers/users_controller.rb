@@ -1,10 +1,12 @@
 class UsersController < ApiController
 
+  skip_before_action :authenticate_user!, :only => [:authparams]
+
   before_action {
     @user = current_user
-    if !@user
-      render_unauthorized
-    end
+    # if !@user
+    #   render_unauthorized
+    # end
   }
 
   # merge local data with account data
@@ -23,6 +25,17 @@ class UsersController < ApiController
       note.tag = tag
       note.save
     end
+  end
+
+  def authparams
+    email = params[:email]
+    user = User.find_by_email(email)
+    pw_salt = user ? Digest::SHA1.hexdigest(email + "SN" + user.pw_nonce) : Digest::SHA1.hexdigest(email + "SN" + ENV["SALT_PSEUDO_NONCE"])
+    pw_cost = user ? user.pw_cost : 5000
+    pw_alg = user ? user.pw_alg : "sha512"
+    pw_key_size = user ? user.pw_key_size : 512
+    pw_func = user ? user.pw_func : "pbkdf2"
+    render :json => {:pw_func => pw_func, :pw_alg => pw_alg, :pw_salt => pw_salt, :pw_cost => pw_cost, :pw_key_size => pw_key_size}
   end
 
   def current
