@@ -68,7 +68,7 @@ class ItemsController < ApiController
   end
 
   def permitted_params
-    [:content, :loc_eek, :content_type]
+    [:content, :enc_item_key, :content_type, :auth_hash]
   end
 
 end

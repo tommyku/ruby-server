@@ -10,7 +10,7 @@ class PresentationsController < ApplicationController
 
   def show
     if !params[:presentation_name]
-      not_found
+      # not_found
       return
     end
 

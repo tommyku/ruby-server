@@ -15,7 +15,8 @@ ActiveRecord::Schema.define(version: 20161114004634) do
   create_table "items", primary_key: "uuid", id: :string, limit: 36, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "content",           limit: 65535
     t.string   "content_type"
-    t.string   "loc_eek"
+    t.string   "enc_item_key"
+    t.string   "auth_hash"
     t.string   "user_uuid"
     t.string   "presentation_name"
     t.datetime "created_at",                      null: false
