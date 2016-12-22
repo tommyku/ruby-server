@@ -15,7 +15,7 @@ class ItemsController < ApiController
       items = @user.items
     end
 
-    render :json => items
+    render :json => {:items => items}
   end
 
   def create

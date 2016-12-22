@@ -15,8 +15,9 @@ Rails.application.routes.draw do
     end
 
     resources :items, param: :uuid
-
   end
+
+  resources :items, param: :uuid
 
   get 'auth/params' => "users#authparams"
 

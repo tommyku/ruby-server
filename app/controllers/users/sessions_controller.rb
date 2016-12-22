@@ -8,7 +8,7 @@ class Users::SessionsController < Devise::SessionsController
     set_flash_message!(:notice, :signed_in)
     sign_in(resource_name, resource)
     yield resource if block_given?
-    render json: { user: resource, token: resource.jwt }
+    render json: { user: resource, token: resource.jwt, items: resource.items }
   end
 
 end

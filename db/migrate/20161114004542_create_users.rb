@@ -2,7 +2,15 @@ class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users, :id => false do |t|
       t.string :uuid, limit: 36, primary_key: true, null: false
+      t.string :email
+      t.string :username, :unique => true
 
+      t.string :pw_func
+      t.string :pw_alg
+      t.integer :pw_cost
+      t.integer :pw_key_size
+      t.string :pw_nonce
+      
       ## Database authenticatable
       t.string :encrypted_password, :null => false, :default => ""
 
@@ -20,14 +28,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string   :current_sign_in_ip
       t.string   :last_sign_in_ip
 
-      t.string :pw_func
-      t.string :pw_alg
-      t.integer :pw_cost
-      t.integer :pw_key_size
-      t.string :pw_nonce
 
-      t.string :email
-      t.string :username, :unique => true
       t.timestamps
     end
 
