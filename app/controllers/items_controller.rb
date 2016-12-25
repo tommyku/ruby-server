@@ -42,7 +42,9 @@ class ItemsController < ApiController
   def _update_presentation_name(item, pname)
     if pname == "_auto_"
       if !current_user.username
-        render :json => {:errors => ["Username is not set."]}, :status => 500
+        # assign temporary username
+        current_user.set_random_username
+        current_user.save
         return
       end
       item.presentation_name = item.slug_for_property_and_name("presentation_name", item.value_for_content_key("title"))

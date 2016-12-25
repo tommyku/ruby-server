@@ -18,7 +18,12 @@ class Item < ApplicationRecord
   end
 
   def value_for_content_key(key)
-    JSON.parse(self.content)[key]
+    puts self.content
+    base64content = self.content[3, self.content.length]
+    puts base64content
+    json_string = Base64.decode64(base64content)
+    puts json_string
+    JSON.parse(json_string)[key]
   end
 
 end

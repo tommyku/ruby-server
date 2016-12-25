@@ -15,4 +15,13 @@ class User < ApplicationRecord
     result
   end
 
+  def set_random_username
+    token_length = 8
+    self.username = loop do
+      range = [*'0'..'9', *'a'..'z', *'A'..'Z']
+      random_token = token_length.times.map { (range).sample }.join
+      break random_token unless self.class.exists?(username: random_token)
+    end
+  end
+
 end
