@@ -10,7 +10,7 @@ class Item < ApplicationRecord
   end
 
   def serializable_hash(options = {})
-    result = super(options.merge({only: ["uuid", "enc_item_key", "content", "content_type", "auth_hash", "presentation_name", "created_at", "modified_at"]}))
+    result = super(options.merge({only: ["uuid", "enc_item_key", "content", "content_type", "auth_hash", "presentation_name", "created_at", "updated_at"]}))
     if self.presentation_name
       result[:presentation_url] = self.presentation_url
     end
