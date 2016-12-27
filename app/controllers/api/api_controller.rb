@@ -1,13 +1,30 @@
-class ApiController < ApplicationController
+class Api::ApiController < ApplicationController
   respond_to :json
+  attr_accessor :current_user
 
-  before_action :authenticate_user!
+  before_action :authenticate_user
 
   before_action {
     request.env['HTTP_ACCEPT_ENCODING'] = 'gzip'
   }
 
   protected
+
+  def authenticate_user
+    if !request.headers['Authorization'].present?
+      render :status => 401
+      return
+    end
+
+    strategy, token = request.headers['Authorization'].split(' ')
+    if (strategy || '').downcase != 'bearer'
+      render :status => 401
+      return
+    end
+
+    claims = JWTWrapper.decode(token) rescue nil
+    self.current_user = User.find_by_uuid claims['user_uuid']
+  end
 
   def not_found(message = 'not_found')
     render json: {error: message}, status: :not_found

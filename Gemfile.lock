@@ -46,8 +46,6 @@ GEM
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (7.1.4)
-    attr_encrypted (3.0.3)
-      encryptor (~> 3.0.0)
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -80,19 +78,12 @@ GEM
     concurrent-ruby (1.0.2)
     connection_pool (2.2.1)
     debug_inspector (0.0.2)
-    devise (4.2.0)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 5.1)
-      responders
-      warden (~> 1.2.3)
     domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
     dotenv-rails (2.1.1)
       dotenv (= 2.1.1)
       railties (>= 4.0, < 5.1)
-    encryptor (3.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
     globalid (0.3.7)
@@ -122,7 +113,6 @@ GEM
       mini_portile2 (~> 2.1.0)
     non-stupid-digest-assets (1.0.9)
       sprockets (>= 2.0)
-    orm_adapter (0.5.0)
     puma (3.6.2)
     rack (2.0.1)
     rack-cors (0.4.0)
@@ -195,8 +185,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
-    warden (1.2.6)
-      rack (>= 1.0)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -211,7 +199,7 @@ PLATFORMS
 
 DEPENDENCIES
   activemodel-serializers-xml
-  attr_encrypted (~> 3.0.0)
+  bcrypt (~> 3.1)
   bower-rails (~> 0.10.0)
   byebug
   capistrano
@@ -221,7 +209,6 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   capistrano-sidekiq
-  devise
   dotenv-rails (~> 2.1.1)
   jwt
   mysql2 (>= 0.3.13, < 0.5)

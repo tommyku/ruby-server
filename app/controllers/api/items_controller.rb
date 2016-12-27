@@ -1,4 +1,4 @@
-class ItemsController < ApiController
+class Api::ItemsController < Api::ApiController
 
   before_action  {
     if params[:uuid]

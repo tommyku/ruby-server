@@ -1,8 +1,5 @@
 class User < ApplicationRecord
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
   has_many :items, -> { order 'created_at desc' }, :foreign_key => "user_uuid"
 
   def jwt
@@ -22,6 +19,18 @@ class User < ApplicationRecord
       random_token = token_length.times.map { (range).sample }.join
       break random_token unless self.class.exists?(username: random_token)
     end
+  end
+
+  DEFAULT_COST = 11
+
+  def self.hash_password(password)
+    BCrypt::Password.create(password, cost: DEFAULT_COST).to_s
+  end
+
+  def self.test_password(password, hash)
+    bcrypt = BCrypt::Password.new(hash)
+    password = BCrypt::Engine.hash_secret(password, bcrypt.salt)
+    return password == hash
   end
 
 end

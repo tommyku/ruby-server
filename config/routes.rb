@@ -1,25 +1,26 @@
 Rails.application.routes.draw do
 
-  devise_for :users, path: 'auth', controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
+  namespace :api, defaults: {format: :json} do
 
-  resources :users do
-    collection do
-      get :current
-    end
+    post "auth/sign_in" => "auth#sign_in"
+    post "auth" => "auth#register"
 
-    member do
-      post :merge
+    get 'auth/params' => "auth#auth_params"
+
+    resources :users do
+      collection do
+        get :current
+      end
+
+      member do
+        post :merge
+      end
+
+      resources :items, param: :uuid
     end
 
     resources :items, param: :uuid
   end
-
-  resources :items, param: :uuid
-
-  get 'auth/params' => "users#authparams"
 
   get 'sitemap.xml', :to => 'sitemap#index', :defaults => { :format => 'xml' }
 
