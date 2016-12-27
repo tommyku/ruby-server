@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.0.1'
 
 gem 'mysql2', '>= 0.3.13', '< 0.5'
@@ -21,19 +20,15 @@ gem 'dotenv-rails', '~> 2.1.1'
 
 gem 'bower-rails', '~> 0.10.0'
 
-gem 'devise'
-# gem 'devise_token_auth', '~> 0.1.39'
-gem 'jwt'
+gem 'bcrypt', '~> 3.1'
 
-gem "attr_encrypted", "~> 3.0.0"
+gem 'jwt'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Used for 'respond_to' feature
 gem 'responders', '~> 2.0'
-
-gem 'stripe'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
