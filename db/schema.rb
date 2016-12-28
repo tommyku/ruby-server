@@ -25,14 +25,14 @@ ActiveRecord::Schema.define(version: 20161228000342) do
   end
 
   create_table "users", primary_key: "uuid", id: :string, limit: 36, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "email"
-    t.string   "username"
+    t.string   "encrypted_password", default: "", null: false
     t.string   "pw_func"
     t.string   "pw_alg"
     t.integer  "pw_cost"
     t.integer  "pw_key_size"
     t.string   "pw_nonce"
-    t.string   "encrypted_password", default: "", null: false
+    t.string   "email"
+    t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["email"], name: "index_users_on_email", using: :btree

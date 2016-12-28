@@ -7,7 +7,7 @@ class User < ApplicationRecord
   end
 
   def serializable_hash(options = {})
-    result = super(options)
+    result = super(options.merge({only: ["email", "username", "uuid"]}))
     result[:single_user_mode] = Rails.configuration.x.single_user_mode
     result
   end
