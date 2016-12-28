@@ -25,10 +25,17 @@ class Api::ItemsController < Api::ApiController
     Item.transaction do
       item_hashes.each do |item_hash|
         item = current_user.items.find_or_create_by(:uuid => item_hash[:uuid])
+        puts item_hash.inspect
         item.update(item_hash.permit(*permitted_params))
         if item_hash.has_key?("presentation_name")
           self._update_presentation_name(item, item_hash[:presentation_name])
         end
+
+        if item.deleted == true
+          item.set_deleted
+          item.save
+        end
+
         items.push(item)
       end
     end
@@ -60,7 +67,8 @@ class Api::ItemsController < Api::ApiController
   end
 
   def destroy
-    @item.destroy
+    @item.set_deleted
+    @item.save
   end
 
   private
@@ -70,7 +78,7 @@ class Api::ItemsController < Api::ApiController
   end
 
   def permitted_params
-    [:content, :enc_item_key, :content_type, :auth_hash]
+    [:content, :enc_item_key, :content_type, :auth_hash, :deleted]
   end
 
 end
