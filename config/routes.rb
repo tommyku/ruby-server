@@ -16,10 +16,14 @@ Rails.application.routes.draw do
         post :merge
       end
 
-      resources :items, param: :uuid
+      resources :items, param: :uuid do
+        collection do
+          post :sync
+        end
+      end
     end
 
-    resources :items, param: :uuid
+    # resources :items, param: :uuid
   end
 
   get 'sitemap.xml', :to => 'sitemap#index', :defaults => { :format => 'xml' }
