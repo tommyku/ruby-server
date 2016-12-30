@@ -18,6 +18,11 @@ class Api::ItemsController < Api::ApiController
     render :json => {:items => items}
   end
 
+  def create
+    saved_items = _sync_save()
+    render :json => {:items => saved_items}
+  end
+
   def sync
     retrieved_items = _sync_get()
     retrieved_items.each do |t|
