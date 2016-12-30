@@ -116,7 +116,7 @@ class Api::ItemsController < Api::ApiController
   end
 
   def permitted_params
-    [:content, :enc_item_key, :content_type, :auth_hash, :deleted]
+    [:content, :enc_item_key, :content_type, :auth_hash, :deleted, :created_at]
   end
 
 end
