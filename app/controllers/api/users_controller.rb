@@ -19,7 +19,7 @@ class Api::UsersController < Api::ApiController
   end
 
   def current
-    render :json => current_user, include: :items
+    render :json => current_user
   end
 
   def update
