@@ -37,11 +37,15 @@ class Api::ItemsController < Api::ApiController
     conflicts = saved_ids & retrieved_ids # & is the intersection
     # saved items take precedence, retrieved items are duplicated with a new uuid
     conflicts.each do |conflicted_uuid|
+      # if changes are greater than 60 seconds apart, create conflicted copy, otherwise discard conflicted
+      saved = saved_items.find{|i| i.uuid == conflicted_uuid}
       conflicted = retrieved_items.find{|i| i.uuid == conflicted_uuid}
-      dup = conflicted.dup
-      dup.user = conflicted.user
-      dup.save
-      retrieved_items.push(dup)
+      if (saved.updated_at - conflicted.updated_at).abs > 60
+        dup = conflicted.dup
+        dup.user = conflicted.user
+        dup.save
+        retrieved_items.push(dup)
+      end
       retrieved_items.delete(conflicted)
     end
 
