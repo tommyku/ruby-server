@@ -24,16 +24,27 @@ class Api::ItemsController < Api::ApiController
   end
 
   def sync
-    retrieved_items = _sync_get()
-    retrieved_items.each do |t|
-      # force Rails to execute the SQL SELECT command FIRST
-      # see http://stackoverflow.com/questions/12052955/rails-activerecord-sql-queries-out-of-order
-    end
+    retrieved_items = _sync_get().to_a
     last_updated = DateTime.now
     saved_items = _sync_save()
     if saved_items.length > 0
       last_updated = saved_items.sort_by{|m| m.created_at}.first.updated_at
     end
+
+    # manage conflicts
+    saved_ids = saved_items.map{|x| x.uuid }
+    retrieved_ids = retrieved_items.map{|x| x.uuid }
+    conflicts = saved_ids & retrieved_ids # & is the intersection
+    # saved items take precedence, retrieved items are duplicated with a new uuid
+    conflicts.each do |conflicted_uuid|
+      conflicted = retrieved_items.find{|i| i.uuid == conflicted_uuid}
+      dup = conflicted.dup
+      dup.user = conflicted.user
+      dup.save
+      retrieved_items.push(dup)
+      retrieved_items.delete(conflicted)
+    end
+
     sync_token = sync_token_from_datetime(last_updated)
     render :json => {:retrieved_items => retrieved_items, :saved_items => saved_items, :sync_token => sync_token}
   end
