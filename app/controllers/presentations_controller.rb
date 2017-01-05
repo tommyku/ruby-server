@@ -21,6 +21,11 @@ class PresentationsController < ApplicationController
       @item = user.items.find_by_presentation_name(params[:presentation_name])
     end
 
+    if !@item
+      not_found
+      return
+    end
+
     type = @item.content_type
 
     case type
@@ -41,7 +46,7 @@ class PresentationsController < ApplicationController
       @desc = @base_note.value_for_content_key("text")[0,200]
       @title = @base_note.value_for_content_key("title")
     elsif @tag
-      @title = "#{@tag.value_for_content_key('name')} — #{root_presentation.root_path}"
+      @title = "#{@tag.value_for_content_key('title')}"
     end
   end
 
