@@ -26,7 +26,7 @@ class Api::ItemsController < Api::ApiController
   def sync
     retrieved_items = _sync_get().to_a
     last_updated = DateTime.now
-    saved_items = _sync_save()
+    saved_items, unsaved = _sync_save()
     if saved_items.length > 0
       last_updated = saved_items.sort_by{|m| m.created_at}.first.updated_at
     end
@@ -50,7 +50,7 @@ class Api::ItemsController < Api::ApiController
     end
 
     sync_token = sync_token_from_datetime(last_updated)
-    render :json => {:retrieved_items => retrieved_items, :saved_items => saved_items, :sync_token => sync_token}
+    render :json => {:retrieved_items => retrieved_items, :saved_items => saved_items, :unsaved => unsaved, :sync_token => sync_token}
   end
 
   def sync_token_from_datetime(datetime)
@@ -68,29 +68,34 @@ class Api::ItemsController < Api::ApiController
 
   def _sync_save
     item_hashes = params[:items] || [params[:item]]
-    items = []
+    saved_items = []
+    unsaved = []
 
-    Item.transaction do
-      item_hashes.each do |item_hash|
+    item_hashes.each do |item_hash|
+      begin
         item = current_user.items.find_or_create_by(:uuid => item_hash[:uuid])
-        item.update(item_hash.permit(*permitted_params))
-        if item_hash.has_key?("presentation_name")
-          self._update_presentation_name(item, item_hash[:presentation_name])
-        end
-
-        if item.deleted == true
-          item.set_deleted
-          item.save
-        end
-
-        items.push(item)
+      rescue => error
+        unsaved.push({
+          :item => item_hash,
+          :error => {:message => error.message, :tag => "uuid_conflict"}
+          })
+        next
       end
+
+      item.update(item_hash.permit(*permitted_params))
+      if item_hash.has_key?("presentation_name")
+        self._update_presentation_name(item, item_hash[:presentation_name])
+      end
+
+      if item.deleted == true
+        item.set_deleted
+        item.save
+      end
+
+      saved_items.push(item)
     end
 
-    return items
-
-  rescue ActiveRecord::RecordInvalid => invalid
-    render :json => {:errors => ["Unable to save."]}
+    return saved_items, unsaved
   end
 
   def _sync_get
