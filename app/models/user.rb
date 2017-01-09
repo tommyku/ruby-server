@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 
   has_many :items, -> { order 'created_at desc' }, :foreign_key => "user_uuid"
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :allow_blank => true, :allow_nil => true
 
   def jwt
     JWTWrapper.encode({:user_uuid => self.uuid})
