@@ -24,11 +24,11 @@ class Api::ItemsController < Api::ApiController
   end
 
   def sync
-    retrieved_items = _sync_get().to_a
+    retrieved_items, cursor_token = _sync_get().to_a
     last_updated = DateTime.now
     saved_items, unsaved = _sync_save()
     if saved_items.length > 0
-      last_updated = saved_items.sort_by{|m| m.created_at}.first.updated_at
+      last_updated = saved_items.sort_by{|m| m.updated_at}.first.updated_at
     end
 
     # manage conflicts
@@ -50,7 +50,10 @@ class Api::ItemsController < Api::ApiController
     end
 
     sync_token = sync_token_from_datetime(last_updated)
-    render :json => {:retrieved_items => retrieved_items, :saved_items => saved_items, :unsaved => unsaved, :sync_token => sync_token}
+    render :json => {
+      :retrieved_items => retrieved_items, :saved_items => saved_items, :unsaved => unsaved,
+      :sync_token => sync_token, :cursor_token => cursor_token
+    }
   end
 
   def sync_token_from_datetime(datetime)
@@ -99,14 +102,31 @@ class Api::ItemsController < Api::ApiController
   end
 
   def _sync_get
-    if params[:sync_token]
-      date = datetime_from_sync_token(params[:sync_token])
-      items = @user.items.where("updated_at > ?", date).all
-    else
-      items = @user.items.all
+    cursor_token = nil
+    limit = params[:limit]
+    if limit == nil
+      limit = 100000
     end
 
-    return items
+    # if both are present, cursor_token takes precendence as that would eventually return all results
+    token = params[:cursor_token] || params[:sync_token]
+
+    if token
+      date = datetime_from_sync_token(token)
+      items = @user.items.order(:updated_at).where("updated_at >= ?", date)
+    else
+      items = @user.items.order(:updated_at)
+    end
+
+    items = items.sort_by{|m| m.updated_at}
+
+    if items.count > limit
+      items = items.slice(0, limit)
+      date = items.last.updated_at
+      cursor_token = sync_token_from_datetime(date)
+    end
+
+    return items, cursor_token
   end
 
   def _update_presentation_name(item, pname)
