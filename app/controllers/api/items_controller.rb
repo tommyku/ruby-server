@@ -113,7 +113,7 @@ class Api::ItemsController < Api::ApiController
 
     if token
       date = datetime_from_sync_token(token)
-      items = @user.items.order(:updated_at).where("updated_at >= ?", date)
+      items = @user.items.order(:updated_at).where("updated_at > ?", date)
     else
       items = @user.items.order(:updated_at)
     end
