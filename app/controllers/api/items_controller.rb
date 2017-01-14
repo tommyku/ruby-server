@@ -106,10 +106,15 @@ class Api::ItemsController < Api::ApiController
     end
 
     # if both are present, cursor_token takes precendence as that would eventually return all results
-    token = params[:cursor_token] || params[:sync_token]
-
-    if token
-      date = datetime_from_sync_token(token)
+    # the distinction between getting results for a cursor and a sync token is that cursor results use a
+    # >= comparison, while a sync token uses a > comparison. The reason for this is that cursor tokens are
+    # typically used for initial syncs or imports, where a bunch of notes could have the exact same updated_at
+    # by using >=, we don't miss those results on a subsequent call with a cursor token
+    if params[:cursor_token]
+      date = datetime_from_sync_token(params[:cursor_token])
+      items = @user.items.order(:updated_at).where("updated_at >= ?", date)
+    elsif params[:sync_token]
+      date = datetime_from_sync_token(params[:sync_token])
       items = @user.items.order(:updated_at).where("updated_at > ?", date)
     else
       items = @user.items.order(:updated_at)
