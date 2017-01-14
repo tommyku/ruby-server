@@ -12,6 +12,5 @@ class Item < ApplicationRecord
     self.content = nil
     self.enc_item_key = nil
     self.auth_hash = nil
-    self.presentation_name = nil
   end
 end
