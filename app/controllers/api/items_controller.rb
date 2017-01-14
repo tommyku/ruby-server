@@ -86,9 +86,6 @@ class Api::ItemsController < Api::ApiController
       end
 
       item.update(item_hash.permit(*permitted_params))
-      if item_hash.has_key?("presentation_name")
-        self._update_presentation_name(item, item_hash[:presentation_name])
-      end
 
       if item.deleted == true
         item.set_deleted
@@ -127,21 +124,6 @@ class Api::ItemsController < Api::ApiController
     end
 
     return items, cursor_token
-  end
-
-  def _update_presentation_name(item, pname)
-    if pname == "_auto_"
-      if !current_user.username
-        # assign temporary username
-        current_user.set_random_username
-        current_user.save
-        return
-      end
-      item.presentation_name = item.slug_for_property_and_name("presentation_name", item.value_for_content_key("title"))
-    else
-      item.presentation_name = pname
-    end
-    item.save
   end
 
   def update
