@@ -29,6 +29,6 @@ class Api::UsersController < Api::ApiController
 
   private
   def u_params
-    params.permit(:username)
+    params.permit()
   end
 end

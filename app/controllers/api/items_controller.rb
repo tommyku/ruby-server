@@ -86,9 +86,6 @@ class Api::ItemsController < Api::ApiController
       end
 
       item.update(item_hash.permit(*permitted_params))
-      if item_hash.has_key?("presentation_name")
-        self._update_presentation_name(item, item_hash[:presentation_name])
-      end
 
       if item.deleted == true
         item.set_deleted
@@ -109,10 +106,15 @@ class Api::ItemsController < Api::ApiController
     end
 
     # if both are present, cursor_token takes precendence as that would eventually return all results
-    token = params[:cursor_token] || params[:sync_token]
-
-    if token
-      date = datetime_from_sync_token(token)
+    # the distinction between getting results for a cursor and a sync token is that cursor results use a
+    # >= comparison, while a sync token uses a > comparison. The reason for this is that cursor tokens are
+    # typically used for initial syncs or imports, where a bunch of notes could have the exact same updated_at
+    # by using >=, we don't miss those results on a subsequent call with a cursor token
+    if params[:cursor_token]
+      date = datetime_from_sync_token(params[:cursor_token])
+      items = @user.items.order(:updated_at).where("updated_at >= ?", date)
+    elsif params[:sync_token]
+      date = datetime_from_sync_token(params[:sync_token])
       items = @user.items.order(:updated_at).where("updated_at > ?", date)
     else
       items = @user.items.order(:updated_at)
@@ -127,21 +129,6 @@ class Api::ItemsController < Api::ApiController
     end
 
     return items, cursor_token
-  end
-
-  def _update_presentation_name(item, pname)
-    if pname == "_auto_"
-      if !current_user.username
-        # assign temporary username
-        current_user.set_random_username
-        current_user.save
-        return
-      end
-      item.presentation_name = item.slug_for_property_and_name("presentation_name", item.value_for_content_key("title"))
-    else
-      item.presentation_name = pname
-    end
-    item.save
   end
 
   def update

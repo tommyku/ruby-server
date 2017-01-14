@@ -10,8 +10,6 @@ gem "non-stupid-digest-assets"
 
 gem 'uglifier'
 
-gem 'redcarpet'
-
 gem 'activemodel-serializers-xml'
 
 gem 'rack-cors', :require => 'rack/cors'
