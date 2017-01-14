@@ -25,6 +25,4 @@ Rails.application.routes.draw do
   end
 
   get '*path' => 'application#frontend'
-
-  root to: "home#index"
 end
