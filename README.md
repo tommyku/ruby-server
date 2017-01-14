@@ -77,32 +77,6 @@ A 256 bit key for encrypting a note's content.
 Digest::SHA256.hexdigest(SecureRandom.random_bytes(32))
 ```
 
-**ROOT_PRESENTATION_PATH**
-
-*Optional/mutually exclusive with ROOT_REDIRECT.*
-
-The root_path of the presentation that should be displayed when visiting the server's root.
-
-
-**ROOT_REDIRECT**
-
-*Optional/mutually exclusive with ROOT_PRESENTATION_PATH.*
-
-A 256 bit key for encrypting a note's content.
-
-
-**PRESENTATION_HOST**
-
-The base URL for shared notes. i.e notes.example.com
-This URL must eventually resolve to where your Standard Notes server is located.
-i.e if your API is available at api.example.com but your presentation host is notes.example.com, both URLs must point to the same server.
-
-**SINGLE_USER_MODE**
-
-*Optional*
-
-This is not particular to the SN protocol, but just how this server manages multiple users. Default is true. If you're running a personal server, and want to prohibit strangers from registering for an account with your server, you should set this true. If you wish to create a public server that allows user registration and multiple user notes, set this to false.
-
 **DB_HOST**
 
 Database host.
