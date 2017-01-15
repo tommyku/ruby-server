@@ -103,4 +103,5 @@ Contributions are encouraged and welcome. Currently outstanding items:
 - Test suite
 
 ## License
-Standard Notes Ruby is released under the MIT License.
+
+Licensed under the GPLv3: http://www.gnu.org/licenses/gpl-3.0.html
