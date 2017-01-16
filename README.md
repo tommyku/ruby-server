@@ -1,28 +1,11 @@
-# Standard Notes Server, Ruby Implementation
+# Standard File Server, Ruby Implementation
 
-This is a production-ready reference implementation of the [Standard Notes](https://standardnotes.org/) protocol.
+This is a production-ready reference implementation of the [Standard File](https://standardfile.org/) protocol.
 
-Standard Notes is a secure personal notes/simple blogging system.
-
-A production client is available at https://app.neeto.io.
-
-The Standard Notes protocol allows any client or server to communicate with one other and manage a user's notes as long as they speak the same language. Anyone can run a SN server or client.
-
-### What is Standard Notes?
-Standard Notes is a simple personal notes application with a strong focus on privacy and encryption. Notes are encrypted locally before being transmitted over the wire with a key only the user knows, and then encrypted once more server-side with a key only the server knows.
-
-SN also allows you to create URLs for groups of notes. This means you can create a group called 'blog' and make the notes in this group publicly viewable at yourdomain.com/blog.
-
-You can also share individual notes and customize the URL, i.e if you wrote about finding secure and private Evernote alternatives, you can share it at yourdomain.com/why-i-switched-from-evernote.
-
-All this happens automatically and with very little effort from you.
-
-### The Neeto Client
-
-The Neeto app is a production client that conforms to the Standard Notes protocol. For details about the Neeto client, or for instructions on running your own client, see the [Neeto web client repo](https://github.com/neeto-project/neeto-web-client).
+A production client is available at https://app.standardnotes.org
 
 ### Running your own server
-You can run your own Standard Notes server, and use it with any SN compatible client. This allows you to have 100% control of your data. This server implementation is built with Ruby on Rails and can be deployed in minutes.
+You can run your own Standard File server, and use it with any SF compatible client (like Standard Notes). This allows you to have 100% control of your data. This server implementation is built with Ruby on Rails and can be deployed in minutes.
 
 #### Getting started
 
