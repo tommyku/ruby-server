@@ -1,6 +1,6 @@
 # Standard Notes Server, Ruby Implementation
 
-This is a production-ready reference implementation of the [Standard Notes](standardnotes.org) protocol.
+This is a production-ready reference implementation of the [Standard Notes](https://standardnotes.org/) protocol.
 
 Standard Notes is a secure personal notes/simple blogging system.
 
