@@ -70,7 +70,10 @@ class Api::ItemsController < Api::ApiController
   end
 
   def _sync_save
-    item_hashes = params[:items] || [params[:item]]
+    item_hashes = params[:items]
+    if !item_hashes
+      return [], []
+    end
     saved_items = []
     unsaved = []
 
