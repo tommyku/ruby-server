@@ -35,3 +35,6 @@ dump.rdb
 # Ignore user uploads
 /public/uploads/*
 !/public/uploads/.keep
+
+# rbenv
+.ruby-version
