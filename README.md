@@ -34,7 +34,7 @@ You can run your own Standard File server, and use it with any SF compatible cli
 
 	```
 	bundle install
-	rails db:migrate
+	rails db:create db:migrate
 	```
 
 4. Start the server:
