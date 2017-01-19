@@ -47,9 +47,6 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     arel (7.1.4)
     bcrypt (3.1.11)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
-    bower-rails (0.10.0)
     builder (3.2.2)
     byebug (9.0.6)
     capistrano (3.6.1)
@@ -77,13 +74,11 @@ GEM
       sidekiq (>= 3.4)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.1)
-    debug_inspector (0.0.2)
     dotenv (2.1.1)
     dotenv-rails (2.1.1)
       dotenv (= 2.1.1)
       railties (>= 4.0, < 5.1)
     erubis (2.7.0)
-    execjs (2.7.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -106,8 +101,6 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-    non-stupid-digest-assets (1.0.9)
-      sprockets (>= 2.0)
     puma (3.6.2)
     rack (2.0.1)
     rack-cors (0.4.0)
@@ -143,7 +136,6 @@ GEM
     redis (3.3.2)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
-    sass (3.4.22)
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -168,13 +160,6 @@ GEM
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.0.3)
-      execjs (>= 0.3.0, < 3)
-    web-console (2.3.0)
-      activemodel (>= 4.0)
-      binding_of_caller (>= 0.7.2)
-      railties (>= 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -185,7 +170,6 @@ PLATFORMS
 DEPENDENCIES
   activemodel-serializers-xml
   bcrypt (~> 3.1)
-  bower-rails (~> 0.10.0)
   byebug
   capistrano
   capistrano-bundler
@@ -197,16 +181,12 @@ DEPENDENCIES
   dotenv-rails (~> 2.1.1)
   jwt
   mysql2 (>= 0.3.13, < 0.5)
-  non-stupid-digest-assets
   puma
   rack-cors
   rails (= 5.0.0.1)
   responders (~> 2.0)
-  sass
   sdoc (~> 0.4.0)
   spring
-  uglifier
-  web-console (~> 2.0)
 
 BUNDLED WITH
-   1.13.6
+   1.13.7

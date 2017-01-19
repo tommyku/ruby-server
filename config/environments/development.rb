@@ -1,8 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # config.assets.js_compressor = Uglifier.new(mangle: false)\
-
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # In the development environment your application's code is reloaded on
