@@ -47,7 +47,7 @@ You can run your own Standard File server, and use it with any SF compatible cli
 
 You can find instructions on deploying an SN server from scratch here:
 
-[Deploying a Standard Notes server with Amazon EC2 and Nginx](https://github.com/standardnotes/ruby-server/wiki/Deploying-a-private-Standard-Notes-server-with-Amazon-EC2-and-Nginx)
+[Deploying a Standard File server with Amazon EC2 and Nginx](https://github.com/standardfile/ruby-server/wiki/Deploying-a-private-Standard-File-server-with-Amazon-EC2-and-Nginx)
 
 ### Environment variables
 
