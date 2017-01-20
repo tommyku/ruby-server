@@ -51,15 +51,6 @@ You can find instructions on deploying an SN server from scratch here:
 
 ### Environment variables
 
-
-**NOTE_CONTENT_EK**
-
-A 256 bit key for encrypting a note's content.
-
-```
-Digest::SHA256.hexdigest(SecureRandom.random_bytes(32))
-```
-
 **DB_HOST**
 
 Database host.
