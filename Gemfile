@@ -29,6 +29,8 @@ group :development, :test do
 
   gem 'puma'
 
+  gem 'rspec-rails'
+
   # Deployment tools
   gem 'capistrano'
   gem 'capistrano-bundler'
