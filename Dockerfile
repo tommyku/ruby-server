@@ -1,6 +1,11 @@
 FROM ubuntu:latest
 
-RUN apt-get update; apt-get install -y git build-essential ruby-dev ruby-rails libz-dev libmysqlclient-dev
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get -y update && \
+	apt-get -y install git build-essential ruby-dev ruby-rails libz-dev libmysqlclient-dev && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get autoremove -y && \
+    apt-get clean
 
 ADD ./ /data/src/
 
