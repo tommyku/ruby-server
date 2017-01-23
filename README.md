@@ -20,7 +20,7 @@ You can run your own Standard File server, and use it with any SF compatible cli
 1. Clone the project:
 
 	```
-	git clone https://github.com/standardnotes/ruby-server.git
+	git clone https://github.com/standardfile/ruby-server.git
 	```
 
 2. Create a .env file in the project's root directory. Add environment variables (see Environment variables for full listing):
