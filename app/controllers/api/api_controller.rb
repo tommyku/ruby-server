@@ -22,7 +22,7 @@ class Api::ApiController < ApplicationController
       return
     end
 
-    claims = JWTWrapper.decode(token) rescue nil
+    claims = StandardFile::JwtHelper.decode(token) rescue nil
     self.current_user = User.find_by_uuid claims['user_uuid']
   end
 
