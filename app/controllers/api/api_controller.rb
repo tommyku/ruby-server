@@ -12,13 +12,13 @@ class Api::ApiController < ApplicationController
 
   def authenticate_user
     if !request.headers['Authorization'].present?
-      render :status => 401
+      render_invalid_auth
       return
     end
 
     strategy, token = request.headers['Authorization'].split(' ')
     if (strategy || '').downcase != 'bearer'
-      render :status => 401
+      render_invalid_auth
       return
     end
 
@@ -27,26 +27,11 @@ class Api::ApiController < ApplicationController
   end
 
   def not_found(message = 'not_found')
-    render json: {error: message}, status: :not_found
+    render json: {error: {:message => message, :tag => "not-found"}}, status: :not_found
   end
 
-  def not_valid(entity)
-    render json: entity.errors, status: :unprocessable_entity
-  end
-
-  def render_unauthorized
-    render json: {"errors" => ["Authorized members only."]}, status: :unauthorized
-  end
-
-  def param_include
-    if params[:include]
-      begin
-        includes = JSON.parse(params[:include], :symbolize_names => true)
-      rescue
-        includes = params[:include]
-      end
-      return includes
-    end
+  def render_invalid_auth
+    render :json => {:error => {:tag => "invalid-auth", :message => "Invalid login credentials."}}, :status => 401
   end
 
 end
