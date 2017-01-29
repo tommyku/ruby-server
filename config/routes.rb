@@ -1,28 +1,17 @@
 Rails.application.routes.draw do
 
-  namespace :api, defaults: {format: :json} do
+  # forward non-namespaced routes to api namespace
+  post "items/sync" => "api/items#sync"
+  get 'auth/params' => "api/auth#auth_params"
+  post "auth/sign_in" => "api/auth#sign_in"
+  post "auth" => "api/auth#register"
 
+  namespace :api, defaults: {format: :json} do
+    get 'auth/params' => "auth#auth_params"
     post "auth/sign_in" => "auth#sign_in"
     post "auth" => "auth#register"
 
-    get 'auth/params' => "auth#auth_params"
-
-    resources :users do
-      collection do
-        get :current
-      end
-
-      member do
-        post :merge
-      end
-    end
-
-    resources :items, param: :uuid do
-      collection do
-        post :sync
-      end
-    end
+    post "items/sync" => "items#sync"
   end
 
-  get '*path' => 'application#frontend'
 end

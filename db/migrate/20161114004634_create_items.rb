@@ -7,10 +7,10 @@ class CreateItems < ActiveRecord::Migration
       t.string :enc_item_key
       t.string :auth_hash
       t.string :user_uuid
-
-      t.string :presentation_name
+      t.boolean :deleted, :default => false
 
       t.timestamps null: false
     end
+      add_index :items, :updated_at
   end
 end

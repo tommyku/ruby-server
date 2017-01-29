@@ -3,7 +3,6 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users, :id => false do |t|
       t.string :uuid, limit: 36, primary_key: true, null: false
       t.string :email
-      t.string :username, :unique => true
 
       t.string :pw_func
       t.string :pw_alg

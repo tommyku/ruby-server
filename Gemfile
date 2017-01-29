@@ -1,18 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.1'
 
 gem 'mysql2', '>= 0.3.13', '< 0.5'
-
-gem 'activemodel-serializers-xml'
 
 gem 'rack-cors', :require => 'rack/cors'
 
 gem 'dotenv-rails', '~> 2.1.1'
 
-gem 'bcrypt', '~> 3.1'
-
-gem 'jwt'
+gem 'standard-file', require: 'standard_file'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc

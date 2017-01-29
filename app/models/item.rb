@@ -7,10 +7,4 @@ class Item < ApplicationRecord
     result
   end
 
-  def set_deleted
-    self.deleted = true
-    self.content = nil
-    self.enc_item_key = nil
-    self.auth_hash = nil
-  end
 end
