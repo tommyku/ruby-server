@@ -185,6 +185,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt
   byebug
   capistrano
   capistrano-bundler
@@ -194,6 +195,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-sidekiq
   dotenv-rails (~> 2.1.1)
+  jwt
   mysql2 (>= 0.3.13, < 0.5)
   puma
   rack-cors

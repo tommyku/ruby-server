@@ -9,6 +9,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'dotenv-rails', '~> 2.1.1'
 
 gem 'jwt'
+gem 'bcrypt'
 
 gem 'standard-file', require: 'standard_file'
 
