@@ -8,7 +8,7 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'dotenv-rails', '~> 2.1.1'
 
-gem 'standard-file', path: '/Users/mobitar/Desktop/standard_file_gem', require: 'standard_file'
+gem 'standard-file', require: 'standard_file'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
