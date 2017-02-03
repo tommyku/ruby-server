@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   get "dashboard" => "application#dashboard"
-  match "/dashboard/*path", to: "application#dashboard", via: [:get]
 
   # forward non-namespaced routes to api namespace
   get 'auth/params' => "api/auth#auth_params"
