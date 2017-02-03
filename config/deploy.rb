@@ -41,7 +41,7 @@ set :rvm_ruby_version, '2.3.0'
 
 namespace :deploy do
 
-  task :npm_install do
+  task :bower_install do
     on roles(:app) do
       within release_path do
         # string commands dont work, have to use special *%w syntax
@@ -59,6 +59,8 @@ namespace :deploy do
     end
   end
 end
+
+before 'deploy:compile_assets', 'bower:install'
 
 set :ssh_options, {
   keys: %W( #{CAP_CONFIG['default']['key_path']} ),
