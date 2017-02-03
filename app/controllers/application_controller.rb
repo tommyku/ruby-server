@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   layout :false
 
-  def frontend
+  def dashboard
 
   end
 
