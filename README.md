@@ -4,8 +4,6 @@ This is a production-ready reference implementation of the [Standard File](https
 
 A production client is available at https://app.standardnotes.org
 
-[![CI](https://circleci.com/gh/standardfile/ruby-server.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/standardfile/ruby-server)
-
 ### Running your own server
 You can run your own Standard File server, and use it with any SF compatible client (like Standard Notes). This allows you to have 100% control of your data. This server implementation is built with Ruby on Rails and can be deployed in minutes.
 
