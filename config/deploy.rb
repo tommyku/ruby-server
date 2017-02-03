@@ -60,7 +60,7 @@ namespace :deploy do
   end
 end
 
-before 'deploy:compile_assets', 'bower:install'
+before 'deploy:compile_assets', 'bower_install'
 
 set :ssh_options, {
   keys: %W( #{CAP_CONFIG['default']['key_path']} ),
