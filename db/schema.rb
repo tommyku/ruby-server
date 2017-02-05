@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170205182304) do
     t.boolean  "deleted",                       default: false
     t.index ["updated_at"], name: "index_items_on_updated_at", using: :btree
     t.index ["user_uuid", "content_type"], name: "index_items_on_user_uuid_and_content_type", using: :btree
+    t.index ["user_uuid"], name: "index_items_on_user_uuid", using: :btree
   end
 
   create_table "users", primary_key: "uuid", id: :string, limit: 36, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
