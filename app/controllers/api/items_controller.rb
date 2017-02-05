@@ -26,21 +26,14 @@ class Api::ItemsController < Api::ApiController
     extensions = current_user.items.where(:content_type => "SF|Extension")
     extensions.each do |ext|
       url = url_for_extension(ext)
-      Thread.new do
-        post_to_extension(url, items)
-      end
-
+      post_to_extension(url, items)
     end
   end
 
   def post_to_extension(url, items)
-    uri = URI.parse(url)
-
-    http = Net::HTTP.new(uri.host, uri.port)
-    req = Net::HTTP::Post.new(uri.request_uri, 'Content-Type' => 'application/json')
-    req.body = {:items => items}.to_json
-    http.use_ssl = (uri.scheme == "https")
-    response = http.request(req)
+    if items && items.length > 0
+      ExtensionJob.perform_later(url, items)
+    end
   end
 
   # Writes all user data to backup extension.
@@ -48,7 +41,7 @@ class Api::ItemsController < Api::ApiController
   def backup
     ext = current_user.items.find(params[:uuid])
     url = url_for_extension(ext)
-    post_to_extension(url, current_user.items)
+    post_to_extension(url, current_user.items.to_a)
   end
 
 

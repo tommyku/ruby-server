@@ -10,7 +10,7 @@ gem 'dotenv-rails', '~> 2.1.1'
 
 gem 'standard-file', require: 'standard_file'
 
-gem 'sf-dropbox-store', path: "~/Desktop/dropbox-sf-ext", require: "dropbox_ext"
+gem 'sf-dropbox-ext', require: "dropbox_ext"
 
 gem 'http'
 
