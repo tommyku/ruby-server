@@ -33,7 +33,9 @@ class Api::ItemsController < Api::ApiController
   end
 
   def post_to_extension(url, items)
-    ExtensionJob.perform_later(url, items)
+    if url && url.length > 0
+      ExtensionJob.perform_later(url, items)
+    end
   end
 
   # Writes all user data to backup extension.
