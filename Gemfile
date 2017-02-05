@@ -12,8 +12,6 @@ gem 'standard-file', require: 'standard_file'
 
 gem 'sf-dropbox-ext', require: "dropbox_ext"
 
-gem 'http'
-
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 

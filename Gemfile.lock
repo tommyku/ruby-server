@@ -83,7 +83,7 @@ GEM
     erubis (2.7.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    http (2.1.0)
+    http (2.2.0)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
       http-form_data (~> 1.0.1)
@@ -168,7 +168,7 @@ GEM
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    sf-dropbox-ext (0.1.0)
+    sf-dropbox-ext (0.1.2)
       dropbox-sdk-v2
       rails (~> 5.0.1)
     sidekiq (4.2.9)
@@ -216,7 +216,6 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-sidekiq
   dotenv-rails (~> 2.1.1)
-  http
   mysql2 (>= 0.3.13, < 0.5)
   puma
   rack-cors

@@ -1,4 +1,6 @@
 class ExtensionJob < ApplicationJob
+  include ActiveJobRetriesCount
+
   queue_as :default
 
   def perform(url, items)
@@ -9,5 +11,9 @@ class ExtensionJob < ApplicationJob
     req.body = {:items => items}.to_json
     http.use_ssl = (uri.scheme == "https")
     response = http.request(req)
+
+    if response.code != '200'
+      retry_job wait: 5.seconds if retries_count < 5
+    end
   end
 end
