@@ -1,20 +1,27 @@
 Rails.application.routes.draw do
 
+  mount DropboxExt::Engine, at: "/ext/dropbox"
+
   get "dashboard" => "application#dashboard"
 
   # forward non-namespaced routes to api namespace
   get 'auth/params' => "api/auth#auth_params"
   post "auth/sign_in" => "api/auth#sign_in"
   post "auth" => "api/auth#register"
+
   post "items/sync" => "api/items#sync"
+  post "items/backup" => "api/items#backup"
+
   delete "items" => "api/items#destroy"
 
+  resources "items", :controller => "api/items"
+
+  # legacy support for clients which hardcoded the "api" path to the base url (iOS)
   namespace :api, defaults: {format: :json} do
     get 'auth/params' => "auth#auth_params"
     post "auth/sign_in" => "auth#sign_in"
     post "auth" => "auth#register"
     post "items/sync" => "items#sync"
-    delete "items" => "items#destroy"
   end
 
 end

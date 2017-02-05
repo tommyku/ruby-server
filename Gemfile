@@ -10,6 +10,8 @@ gem 'dotenv-rails', '~> 2.1.1'
 
 gem 'standard-file', require: 'standard_file'
 
+gem 'sf-dropbox-ext', require: "dropbox_ext"
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
