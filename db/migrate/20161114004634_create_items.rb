@@ -11,6 +11,7 @@ class CreateItems < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-      add_index :items, :updated_at
+
+    add_index :items, :updated_at
   end
 end

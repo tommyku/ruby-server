@@ -1,8 +1,6 @@
 class Api::ItemsController < Api::ApiController
 
   require "standard_file"
-  require 'net/http'
-  require 'uri'
 
   def sync_manager
     if !@sync_manager
@@ -23,6 +21,10 @@ class Api::ItemsController < Api::ApiController
   end
 
   def post_to_extensions(items)
+    if !items || items.length == 0
+      return
+    end
+
     extensions = current_user.items.where(:content_type => "SF|Extension")
     extensions.each do |ext|
       url = url_for_extension(ext)
@@ -31,9 +33,7 @@ class Api::ItemsController < Api::ApiController
   end
 
   def post_to_extension(url, items)
-    if items && items.length > 0
-      ExtensionJob.perform_later(url, items)
-    end
+    ExtensionJob.perform_later(url, items)
   end
 
   # Writes all user data to backup extension.
@@ -41,7 +41,10 @@ class Api::ItemsController < Api::ApiController
   def backup
     ext = current_user.items.find(params[:uuid])
     url = url_for_extension(ext)
-    post_to_extension(url, current_user.items.to_a)
+    items = current_user.items.to_a
+    if items && items.length > 0
+      post_to_extension(url, items)
+    end
   end
 
 

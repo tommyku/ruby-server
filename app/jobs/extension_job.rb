@@ -1,5 +1,7 @@
 class ExtensionJob < ApplicationJob
   include ActiveJobRetriesCount
+  require 'net/http'
+  require 'uri'
 
   queue_as :default
 
