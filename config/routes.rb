@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'auth/params' => "api/auth#auth_params"
   post "auth/sign_in" => "api/auth#sign_in"
   post "auth" => "api/auth#register"
+  post "auth/change_pw" => "api/auth#change_pw"
 
   post "items/sync" => "api/items#sync"
   post "items/backup" => "api/items#backup"
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
     get 'auth/params' => "auth#auth_params"
     post "auth/sign_in" => "auth#sign_in"
     post "auth" => "auth#register"
+    post "auth/change_pw" => "auth#change_pw"
     post "items/sync" => "items#sync"
   end
 

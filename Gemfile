@@ -8,12 +8,9 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'dotenv-rails', '~> 2.1.1'
 
-gem 'standard-file', require: 'standard_file'
+gem 'standard-file', '0.1.3', require: 'standard_file'
 
 gem 'sf-dropbox-ext', require: "dropbox_ext"
-
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Used for 'respond_to' feature
 gem 'responders', '~> 2.0'

@@ -23,7 +23,16 @@ class Api::ApiController < ApplicationController
     end
 
     claims = StandardFile::JwtHelper.decode(token) rescue nil
-    self.current_user = User.find_by_uuid claims['user_uuid']
+    user = User.find_by_uuid claims['user_uuid']
+    if claims['pw_hash']
+      # newer versions of our jwt include the user's hashed encrypted pw,
+      # to check if the user has changed their pw and thus forbid them from access if they have an old jwt
+      if claims['pw_hash'] != Digest::SHA256.hexdigest(user.encrypted_password)
+        render_invalid_auth
+        return
+      end
+    end
+    self.current_user = user
   end
 
   def not_found(message = 'not_found')
