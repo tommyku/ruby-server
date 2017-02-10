@@ -8,8 +8,7 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'dotenv-rails', '~> 2.1.1'
 
-# gem 'standard-file', require: 'standard_file'
-gem 'standard-file', path: "~/Desktop/standard_file_gem", require: 'standard_file'
+gem 'standard-file', '0.1.3', require: 'standard_file'
 
 gem 'sf-dropbox-ext', require: "dropbox_ext"
 
