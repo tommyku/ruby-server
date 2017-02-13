@@ -14,7 +14,7 @@ class ExtensionJob < ApplicationJob
     http.use_ssl = (uri.scheme == "https")
     response = http.request(req)
 
-    if response.code != '200'
+    if response.code[0] != '2'
       retry_job wait: 5.seconds if retries_count < 5
     end
   end
