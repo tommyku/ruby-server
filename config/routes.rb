@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  mount DropboxExt::Engine, at: "/ext/dropbox"
-
   get "dashboard" => "application#dashboard"
 
   # forward non-namespaced routes to api namespace
