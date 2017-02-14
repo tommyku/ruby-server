@@ -10,8 +10,6 @@ gem 'dotenv-rails', '~> 2.1.1'
 
 gem 'standard-file', '0.1.3', require: 'standard_file'
 
-gem 'sf-dropbox-ext', require: "dropbox_ext"
-
 # Used for 'respond_to' feature
 gem 'responders', '~> 2.0'
 
