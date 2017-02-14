@@ -5,6 +5,9 @@ class MigrateDropboxToExtServer < ActiveRecord::Migration[5.0]
 
     extensions = Item.where(:content_type => "SF|Extension")
     extensions.each do |ext|
+      if !ext.content
+        next
+      end
       string = ext.content[3..ext.content.length]
       decoded = Base64.decode64(string)
       obj = JSON.parse(decoded)
