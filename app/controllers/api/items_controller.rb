@@ -69,6 +69,9 @@ class Api::ItemsController < Api::ApiController
   private
 
   def url_for_extension(ext)
+    if ext.content == nil
+      return nil
+    end
     string = ext.content[3..ext.content.length]
     decoded = Base64.decode64(string)
     obj = JSON.parse(decoded)
