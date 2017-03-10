@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221011303) do
+ActiveRecord::Schema.define(version: 20170309232850) do
 
   create_table "items", primary_key: "uuid", id: :string, limit: 36, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "content",      limit: 16777215
     t.string   "content_type"
-    t.string   "enc_item_key"
+    t.text     "enc_item_key", limit: 65535
     t.string   "auth_hash"
     t.string   "user_uuid"
     t.datetime "created_at",                    precision: 6,                 null: false
