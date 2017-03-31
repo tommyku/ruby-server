@@ -93,6 +93,10 @@ You can find instructions on deploying an SN server from scratch here:
 
 ### Environment variables
 
+**SECRET_KEY_BASE**
+
+Rails secret key used only in production environment
+
 **RAILS_ENV***
 
 Rails environment, set it to `production` on production server.
