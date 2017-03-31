@@ -5,19 +5,14 @@ services:
     build: .
     depends_on:
       - db
-    environment:
-      - DB_HOST=db
-      - DB_DATABASE=standardfile
-      - DB_USERNAME=root
-      - DB_PASSWORD=secret123
+    env_file: .env.web.development
     links:
       - db
     ports:
       - "3000:3000"
   db:
     image: mysql:5.7.17
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret123
+    env_file: .env.db.development
     volumes:
       - db_data:/var/lib/mysql
   web:
