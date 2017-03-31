@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  app:
+    env_file: .env.web.production
+    restart: always
+  db:
+    restart: always
+    env_file: .env.db.production
+  web:
+    restart: always
