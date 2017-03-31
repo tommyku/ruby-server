@@ -49,7 +49,53 @@ You can find instructions on deploying an SN server from scratch here:
 
 [Deploying a Standard File server with Amazon EC2 and Nginx](https://github.com/standardfile/ruby-server/wiki/Deploying-a-private-Standard-File-server-with-Amazon-EC2-and-Nginx)
 
+### Deploying to a live server with Docker
+
+**On production server**
+
+1. Clone the project
+   ``` bash
+   $ git clone https://github.com/tommyku/ruby-server
+   ```
+
+2. Create .env.{web|db}.production files in the project's root directory. Add environment variables (see Environment variables for full listing):
+   ```
+   DB_HOST=db
+   ...
+   ```
+
+3. Build and start the services:
+   ``` bash
+   $ docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d
+   ```
+
+4. Login to the `app` service to initialize project:
+   ``` bash
+   $ docker ps
+   $ docker exec -it {container ID of the app service} /bin/bash
+   app> bundle exec rake db:create db:migrate
+   ```
+
+5. Access the server from 3000 port or 80 port
+  ``` bash
+  $ curl {domain name}
+  <!doctype html>
+  <html>
+    ...
+    <body>
+      <h1> Hi! You're not supposed to be here. </h1>
+
+      <p> You might be looking for the <a href="https://app.standardnotes.org"> Standard Notes Web App</a> or the main <a href="https://standardnotes.org"> Standard Notes Website</a>. </p>
+
+    </body>
+  </html>
+  ```
+
 ### Environment variables
+
+**RAILS_ENV***
+
+Rails environment, set it to `production` on production server.
 
 **DB_HOST**
 
