@@ -61,7 +61,7 @@ To deploy to a live server using Docker and Docker-Compose, see:
 
 Rails secret key used only in production environment
 
-**RAILS_ENV***
+**RAILS_ENV**
 
 Rails environment, set it to `production` on production server.
 
