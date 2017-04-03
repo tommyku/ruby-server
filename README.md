@@ -49,7 +49,21 @@ You can find instructions on deploying an SN server from scratch here:
 
 [Deploying a Standard File server with Amazon EC2 and Nginx](https://github.com/standardfile/ruby-server/wiki/Deploying-a-private-Standard-File-server-with-Amazon-EC2-and-Nginx)
 
+#### Using Docker
+
+To deploy to a live server using Docker and Docker-Compose, see:
+
+[Deploying a private Standard File server using Docker](https://github.com/standardfile/ruby-server/wiki/Deploying-a-private-Standard-File-server-using-Docker)
+
 ### Environment variables
+
+**SECRET_KEY_BASE**
+
+Rails secret key used only in production environment
+
+**RAILS_ENV**
+
+Rails environment, set it to `production` on production server.
 
 **DB_HOST**
 
