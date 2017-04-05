@@ -11,3 +11,5 @@ services:
     restart: always
     env_file: ./docker/environments/.env.db.production
     network_mode: bridge
+    volumes:
+      - ./db_backup:/var/db_backup
