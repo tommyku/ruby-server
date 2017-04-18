@@ -85,20 +85,6 @@ Database username.
 
 Database password.
 
-#### Optional environment variables if you want to use Dropbox
-
-**HOST**
-
-Server url
-
-**DROPBOX_CLIENT_ID**
-
-Dropbox client id
-
-**DROPBOX_CLIENT_SECRET**
-
-Dropbox client secret
-
 ## Contributing
 Contributions are encouraged and welcome. Currently outstanding items:
 
