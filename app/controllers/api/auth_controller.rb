@@ -3,7 +3,7 @@ class Api::AuthController < Api::ApiController
   skip_before_action :authenticate_user, except: [:change_pw]
 
   before_action {
-    @user_manager = StandardFile::UserManager.new(User, ENV['SALT_PSEUDO_NONCE'])
+    @user_manager = user_manager
   }
 
   def sign_in

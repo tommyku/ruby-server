@@ -1,11 +1,15 @@
 class Api::ApiController < ApplicationController
   respond_to :json
+
   attr_accessor :current_user
+  attr_accessor :user_manager
 
   before_action :authenticate_user
 
   before_action {
     request.env['HTTP_ACCEPT_ENCODING'] = 'gzip'
+
+    self.user_manager = StandardFile::UserManager.new(User, ENV['SALT_PSEUDO_NONCE'])
   }
 
   protected
@@ -32,6 +36,7 @@ class Api::ApiController < ApplicationController
         return
       end
     end
+
     self.current_user = user
   end
 

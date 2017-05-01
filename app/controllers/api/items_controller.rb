@@ -34,7 +34,7 @@ class Api::ItemsController < Api::ApiController
 
   def post_to_extension(url, items)
     if url && url.length > 0
-      ExtensionJob.perform_later(url, items)
+      ExtensionJob.perform_later(url, items, user_manager.auth_params(current_user.email))
     end
   end
 
