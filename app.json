@@ -1,0 +1,6 @@
+{
+  "name": "Standard File Server",
+  "description": "A ready to use Standard File server for use with Standard Notes.",
+  "repository": "https://github.com/standardfile/ruby-server",
+  "keywords": ["standard file", "standard notes", "encrypted"]
+}
