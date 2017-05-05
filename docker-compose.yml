@@ -5,14 +5,14 @@ services:
     build: .
     depends_on:
       - db
-    env_file: .env.web.development
+    env_file: ./docker/environments/.env.app.development
     links:
       - db
     ports:
       - "3000:3000"
   db:
     image: mysql:5.7.17
-    env_file: .env.db.development
+    env_file: ./docker/environments/.env.db.development
     volumes:
       - db_data:/var/lib/mysql
   web:
