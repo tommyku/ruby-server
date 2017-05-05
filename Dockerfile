@@ -23,4 +23,6 @@ COPY . $PROJECT_DIR
 RUN bundle exec rake assets:precompile
 
 EXPOSE 3000
-CMD rm -f $PROJECT_DIR/tmp/pids/server.pid && $PROJECT_DIR/bin/run
+
+ENTRYPOINT [ "./docker/entrypoint" ]
+CMD [ "start" ]
