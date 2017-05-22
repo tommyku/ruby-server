@@ -6,10 +6,8 @@ services:
     restart: always
     volumes:
       - ./public:/data/src/public
+    network_mode: bridge
   db:
     restart: always
     env_file: ./docker/environments/.env.db.production
-  web:
-    restart: always
-    volumes:
-      - ./public:/data/src/public
+    network_mode: bridge

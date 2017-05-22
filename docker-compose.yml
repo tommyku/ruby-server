@@ -15,13 +15,5 @@ services:
     env_file: ./docker/environments/.env.db.development
     volumes:
       - db_data:/var/lib/mysql
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile-nginx
-    links:
-      - app
-    ports:
-      - "80:80"
 volumes:
   db_data:
