@@ -13,7 +13,7 @@ You can run your own Standard File server, and use it with any SF compatible cli
 
 - Ruby 2.2+
 - Rails 5
-- MySQL database
+- MySQL 5.6+ database
 
 **Instructions**
 
